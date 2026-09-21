@@ -18,6 +18,7 @@ import 'screens/weather_screen.dart';
 import 'screens/supply_chain_screen.dart';
 import 'screens/ai_assistant_screen.dart';
 import 'screens/orders_screen.dart';
+import 'screens/intro_screen.dart';
 import 'services/auth_service.dart';
 import 'services/market_price_service.dart';
 import 'services/offline_service.dart';
@@ -86,7 +87,7 @@ class FarmTradingApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFFF6F9F6),
       ),
 
-      home: const SplashScreen(),
+      home: const IntroScreen(nextScreen: RoleSelectionScreen()),
     );
   }
 }
