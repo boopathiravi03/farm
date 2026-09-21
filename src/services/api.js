@@ -1,0 +1,253 @@
+const API_URL = "http://localhost:5000/api";
+
+export async function registerUser(userData) {
+  const response = await fetch(`${API_URL}/auth/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  });
+
+  return response.json();
+}
+
+export async function loginUser(email, password) {
+  const response = await fetch(`${API_URL}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  });
+
+  return response.json();
+}
+
+export async function getCrops() {
+  const response = await fetch(`${API_URL}/crops`);
+
+  return response.json();
+}
+
+export async function addCrop(cropData) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/crops`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(cropData),
+  });
+
+  return response.json();
+}
+
+export async function getMyCrops() {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/crops/my-crops`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function updateCrop(id, cropData) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/crops/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(cropData),
+  });
+
+  return response.json();
+}
+
+export async function deleteCrop(id) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/crops/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function searchCrops(params = {}) {
+  const query = new URLSearchParams();
+
+  if (params.search) {
+    query.append("search", params.search);
+  }
+
+  if (params.category) {
+    query.append("category", params.category);
+  }
+
+  if (params.location) {
+    query.append("location", params.location);
+  }
+
+  if (params.minPrice) {
+    query.append("minPrice", params.minPrice);
+  }
+
+  if (params.maxPrice) {
+    query.append("maxPrice", params.maxPrice);
+  }
+
+  const response = await fetch(`${API_URL}/crops/search?${query.toString()}`);
+
+  return response.json();
+}
+
+export async function placeOrder(orderData) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/orders`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(orderData),
+  });
+
+  return response.json();
+}
+
+export async function getMyOrders() {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/orders/my-orders`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function getFarmerOrders() {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/orders/farmer-orders`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function updateOrderStatus(orderId, status) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/orders/${orderId}/status`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      status,
+    }),
+  });
+
+  return response.json();
+}
+
+export async function startNegotiation(negotiationData) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/negotiations`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(negotiationData),
+  });
+
+  return response.json();
+}
+
+export async function sendOffer(negotiationId, price, message) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(
+    `${API_URL}/negotiations/${negotiationId}/offer`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        price,
+        message,
+      }),
+    },
+  );
+
+  return response.json();
+}
+
+export async function getNegotiation(negotiationId) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/negotiations/${negotiationId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function acceptNegotiation(negotiationId) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(
+    `${API_URL}/negotiations/${negotiationId}/accept`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  return response.json();
+}
+
+export async function rejectNegotiation(negotiationId) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(
+    `${API_URL}/negotiations/${negotiationId}/reject`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  return response.json();
+}
