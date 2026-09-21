@@ -19,18 +19,12 @@ async function createNotification({
 
     // Send notification instantly
     if (io) {
-      io.to(`user_${userId}`).emit(
-        "newNotification",
-        notification
-      );
+      io.to(`user_${userId}`).emit("newNotification", notification);
     }
 
     return notification;
   } catch (error) {
-    console.error(
-      "Notification creation failed:",
-      error.message
-    );
+    console.error("Notification creation failed:", error.message);
   }
 }
 

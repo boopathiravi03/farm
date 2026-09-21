@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getMyOrders } from "../services/api";
 
 function MyOrders() {
+  const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -48,6 +50,24 @@ function MyOrders() {
             <p>Farmer: {order.farmer?.name}</p>
             <p>Status: {order.status}</p>
             <p>Delivery: {order.deliveryAddress}</p>
+
+            {order.status === "pending" && (
+              <button
+                onClick={() => navigate(`/payment?orderId=${order._id}`)}
+                style={{
+                  marginTop: "8px",
+                  padding: "6px 14px",
+                  backgroundColor: "#2e7d32",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  fontWeight: "bold",
+                }}
+              >
+                💳 Pay Now
+              </button>
+            )}
           </div>
         ))
       )}

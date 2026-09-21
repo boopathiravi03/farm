@@ -50,7 +50,7 @@ router.put("/:id/read", authMiddleware, async (req, res) => {
       },
       {
         new: true,
-      }
+      },
     );
 
     if (!notification) {
@@ -77,7 +77,7 @@ router.put("/read-all", authMiddleware, async (req, res) => {
       },
       {
         isRead: true,
-      }
+      },
     );
 
     res.json({

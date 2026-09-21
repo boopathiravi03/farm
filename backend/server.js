@@ -12,6 +12,7 @@ const cropRoutes = require("./routes/cropRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const negotiationRoutes = require("./routes/negotiationRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use("/api/crops", cropRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/negotiations", negotiationRoutes);
 app.use("/api/notifications", notificationRoutes);
+app.use("/api/payments", paymentRoutes);
 
 // Socket.IO
 io.on("connection", (socket) => {
@@ -45,9 +47,7 @@ io.on("connection", (socket) => {
   socket.on("joinUser", (userId) => {
     socket.join(`user_${userId}`);
 
-    console.log(
-      `User ${userId} joined notification room`
-    );
+    console.log(`User ${userId} joined notification room`);
   });
 
   socket.on("disconnect", () => {
@@ -64,7 +64,7 @@ mongoose
 
     server.listen(process.env.PORT || 5000, () => {
       console.log(
-        `Server running on http://localhost:${process.env.PORT || 5000}`
+        `Server running on http://localhost:${process.env.PORT || 5000}`,
       );
     });
   })

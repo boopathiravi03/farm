@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import NotificationBell from "../components/NotificationBell";
 import CropMarketplace from "../components/CropMarketplace";
 import MyOrders from "../components/MyOrders";
 
 function BuyerDashboard() {
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   return (
@@ -21,6 +23,19 @@ function BuyerDashboard() {
         <h2>🛒 Farm Trading — Buyer Marketplace</h2>
         <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
           <span>Welcome, {user.name || "Buyer"}</span>
+          <button
+            onClick={() => navigate("/payment-history")}
+            style={{
+              padding: "6px 12px",
+              background: "#0d47a1",
+              color: "white",
+              border: "1px solid #90caf9",
+              borderRadius: "4px",
+              cursor: "pointer",
+            }}
+          >
+            💳 Payment History
+          </button>
           <NotificationBell />
         </div>
       </nav>

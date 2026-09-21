@@ -26,7 +26,8 @@ function AdminDashboard() {
       <main style={{ padding: "20px" }}>
         <h3>System Overview & Live Notifications</h3>
         <p>
-          Monitor platform transactions, order flows, and real-time farmer-buyer alerts.
+          Monitor platform transactions, order flows, and real-time farmer-buyer
+          alerts.
         </p>
       </main>
     </div>

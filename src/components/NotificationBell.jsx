@@ -12,9 +12,7 @@ function NotificationBell() {
   const [unread, setUnread] = useState(0);
   const [open, setOpen] = useState(false);
 
-  const user = JSON.parse(
-    localStorage.getItem("user")
-  );
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     if (!user) return;
@@ -24,10 +22,7 @@ function NotificationBell() {
     socket.emit("joinUser", user._id || user.id);
 
     socket.on("newNotification", (notification) => {
-      setNotifications((prev) => [
-        notification,
-        ...prev,
-      ]);
+      setNotifications((prev) => [notification, ...prev]);
 
       setUnread((prev) => prev + 1);
     });
@@ -57,15 +52,11 @@ function NotificationBell() {
 
       setNotifications((prev) =>
         prev.map((item) =>
-          item._id === id
-            ? { ...item, isRead: true }
-            : item
-        )
+          item._id === id ? { ...item, isRead: true } : item,
+        ),
       );
 
-      setUnread((prev) =>
-        prev > 0 ? prev - 1 : 0
-      );
+      setUnread((prev) => (prev > 0 ? prev - 1 : 0));
     } catch (error) {
       console.error(error);
     }
@@ -73,17 +64,9 @@ function NotificationBell() {
 
   return (
     <div className="notification-container">
-      <button
-        className="notification-button"
-        onClick={() => setOpen(!open)}
-      >
+      <button className="notification-button" onClick={() => setOpen(!open)}>
         🔔
-
-        {unread > 0 && (
-          <span className="notification-count">
-            {unread}
-          </span>
-        )}
+        {unread > 0 && <span className="notification-count">{unread}</span>}
       </button>
 
       {open && (
@@ -93,34 +76,22 @@ function NotificationBell() {
           </div>
 
           {notifications.length === 0 ? (
-            <p className="empty-notification">
-              No notifications
-            </p>
+            <p className="empty-notification">No notifications</p>
           ) : (
             notifications.map((notification) => (
               <div
                 key={notification._id}
                 className={`notification-item ${
-                  !notification.isRead
-                    ? "unread"
-                    : ""
+                  !notification.isRead ? "unread" : ""
                 }`}
-                onClick={() =>
-                  handleRead(notification._id)
-                }
+                onClick={() => handleRead(notification._id)}
               >
-                <strong>
-                  {notification.title}
-                </strong>
+                <strong>{notification.title}</strong>
 
-                <p>
-                  {notification.message}
-                </p>
+                <p>{notification.message}</p>
 
                 <small>
-                  {new Date(
-                    notification.createdAt
-                  ).toLocaleString()}
+                  {new Date(notification.createdAt).toLocaleString()}
                 </small>
               </div>
             ))

@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import NotificationBell from "../components/NotificationBell";
 import MyCrops from "../components/MyCrops";
 import FarmerOrders from "../components/FarmerOrders";
 
 function FarmerDashboard() {
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   return (
@@ -21,6 +23,19 @@ function FarmerDashboard() {
         <h2>🌾 Farm Trading — Farmer Portal</h2>
         <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
           <span>Welcome, {user.name || "Farmer"}</span>
+          <button
+            onClick={() => navigate("/farmer-earnings")}
+            style={{
+              padding: "6px 12px",
+              background: "#1b5e20",
+              color: "white",
+              border: "1px solid #81c784",
+              borderRadius: "4px",
+              cursor: "pointer",
+            }}
+          >
+            💰 My Earnings
+          </button>
           <NotificationBell />
         </div>
       </nav>

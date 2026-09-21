@@ -301,3 +301,45 @@ export async function markAllNotificationsRead() {
 
   return response.json();
 }
+
+export async function makePayment(orderId, paymentMethod) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/payments`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      orderId,
+      paymentMethod,
+    }),
+  });
+
+  return response.json();
+}
+
+export async function getMyPayments() {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/payments/my-payments`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function getFarmerEarnings() {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/payments/farmer-earnings`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}
