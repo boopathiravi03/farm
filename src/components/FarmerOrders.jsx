@@ -59,7 +59,10 @@ function FarmerOrders() {
     try {
       const result = await createDelivery(orderId);
       if (result.delivery) {
-        alert("Delivery created successfully! Tracking ID: " + result.delivery.trackingId);
+        alert(
+          "Delivery created successfully! Tracking ID: " +
+            result.delivery.trackingId,
+        );
         setDeliveries((prev) => ({ ...prev, [orderId]: result.delivery }));
         loadOrders();
       } else {
@@ -124,16 +127,30 @@ function FarmerOrders() {
               </p>
 
               {order.status === "pending" && (
-                <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
+                <div
+                  style={{ marginTop: "10px", display: "flex", gap: "10px" }}
+                >
                   <button
                     onClick={() => changeStatus(order._id, "accepted")}
-                    style={{ background: "#2e7d32", color: "white", padding: "6px 14px", border: "none", borderRadius: "4px" }}
+                    style={{
+                      background: "#2e7d32",
+                      color: "white",
+                      padding: "6px 14px",
+                      border: "none",
+                      borderRadius: "4px",
+                    }}
                   >
                     Accept
                   </button>
                   <button
                     onClick={() => changeStatus(order._id, "rejected")}
-                    style={{ background: "#c62828", color: "white", padding: "6px 14px", border: "none", borderRadius: "4px" }}
+                    style={{
+                      background: "#c62828",
+                      color: "white",
+                      padding: "6px 14px",
+                      border: "none",
+                      borderRadius: "4px",
+                    }}
                   >
                     Reject
                   </button>
@@ -172,21 +189,34 @@ function FarmerOrders() {
                       <p style={{ margin: "4px 0" }}>
                         Tracking ID: <strong>{delivery.trackingId}</strong>
                       </p>
-                      <div style={{ marginTop: "8px", display: "flex", alignItems: "center", gap: "10px" }}>
+                      <div
+                        style={{
+                          marginTop: "8px",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                        }}
+                      >
                         <label>
                           <strong>Update Delivery Status:</strong>
                         </label>
                         <select
                           value={delivery.status}
                           onChange={(e) =>
-                            handleDeliveryStatus(order._id, delivery._id, e.target.value)
+                            handleDeliveryStatus(
+                              order._id,
+                              delivery._id,
+                              e.target.value,
+                            )
                           }
                           style={{ padding: "6px 10px", borderRadius: "4px" }}
                         >
                           <option value="processing">⚙️ Processing</option>
                           <option value="packed">📦 Packed</option>
                           <option value="shipped">🚚 Shipped</option>
-                          <option value="out_for_delivery">🛵 Out for Delivery</option>
+                          <option value="out_for_delivery">
+                            🛵 Out for Delivery
+                          </option>
                           <option value="delivered">🏠 Delivered</option>
                         </select>
                       </div>

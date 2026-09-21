@@ -61,10 +61,7 @@ const deliverySchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-module.exports = mongoose.model(
-  "Delivery",
-  deliverySchema
-);
+module.exports = mongoose.model("Delivery", deliverySchema);

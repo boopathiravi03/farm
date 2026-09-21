@@ -6,6 +6,7 @@ import PaymentPage from "./pages/PaymentPage";
 import PaymentHistory from "./pages/PaymentHistory";
 import FarmerEarnings from "./pages/FarmerEarnings";
 import OrderTracking from "./pages/OrderTracking";
+import AIFarmerAssistant from "./pages/AIFarmerAssistant";
 
 function App() {
   return (
@@ -19,10 +20,10 @@ function App() {
         <Route path="/payment-history" element={<PaymentHistory />} />
         <Route path="/farmer-earnings" element={<FarmerEarnings />} />
         <Route path="/order-tracking" element={<OrderTracking />} />
+        <Route path="/ai-assistant" element={<AIFarmerAssistant />} />
       </Routes>
     </BrowserRouter>
   );
 }
 
 export default App;
-

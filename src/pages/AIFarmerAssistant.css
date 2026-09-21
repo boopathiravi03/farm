@@ -1,0 +1,211 @@
+.ai-page {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+
+  padding: 40px 20px;
+
+  background: #f4f8f3;
+}
+
+.ai-container {
+  width: 100%;
+  max-width: 900px;
+
+  background: white;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 10px 35px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  flex-direction: column;
+
+  height: 750px;
+}
+
+.ai-header {
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 20px 25px;
+
+  background: #1b5e20;
+
+  color: white;
+}
+
+.ai-icon {
+  width: 50px;
+  height: 50px;
+
+  border-radius: 50%;
+
+  background: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 28px;
+}
+
+.ai-header h1 {
+  margin: 0;
+}
+
+.ai-header p {
+  margin: 4px 0 0;
+}
+
+
+.ai-chat {
+  flex: 1;
+
+  padding: 25px;
+
+  overflow-y: auto;
+
+  background: #fafafa;
+}
+
+.ai-welcome {
+  text-align: center;
+
+  margin-top: 80px;
+}
+
+.ai-welcome h2 {
+  margin-bottom: 8px;
+}
+
+.suggestions {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  margin-top: 25px;
+}
+
+.suggestions button {
+  padding: 10px 15px;
+
+  border: 1px solid #ddd;
+
+  border-radius: 20px;
+
+  background: white;
+
+  cursor: pointer;
+}
+
+.suggestions button:hover {
+  background: #eef7ee;
+}
+
+
+.message {
+  display: flex;
+
+  gap: 10px;
+
+  margin-bottom: 20px;
+
+  max-width: 80%;
+}
+
+.user-message {
+  margin-left: auto;
+
+  flex-direction: row-reverse;
+}
+
+.message-avatar {
+  width: 38px;
+  height: 38px;
+
+  min-width: 38px;
+
+  border-radius: 50%;
+
+  background: #e8f5e9;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.message-text {
+  padding: 12px 16px;
+
+  border-radius: 15px;
+
+  white-space: pre-line;
+
+  line-height: 1.5;
+}
+
+.ai-message .message-text {
+  background: #e8f5e9;
+}
+
+.user-message .message-text {
+  background: #1b5e20;
+
+  color: white;
+}
+
+
+.ai-input-area {
+  display: flex;
+
+  gap: 10px;
+
+  padding: 15px;
+
+  border-top: 1px solid #ddd;
+}
+
+.ai-input-area input {
+  flex: 1;
+
+  padding: 14px 18px;
+
+  border: 1px solid #ddd;
+
+  border-radius: 25px;
+
+  outline: none;
+
+  font-size: 15px;
+}
+
+.ai-input-area button {
+  width: 50px;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: #1b5e20;
+
+  color: white;
+
+  font-size: 20px;
+
+  cursor: pointer;
+}
+
+.ai-input-area button:disabled {
+  opacity: 0.6;
+}

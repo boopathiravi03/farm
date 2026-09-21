@@ -36,6 +36,20 @@ function FarmerDashboard() {
           >
             💰 My Earnings
           </button>
+          <button
+            onClick={() => navigate("/ai-assistant")}
+            style={{
+              padding: "6px 12px",
+              background: "#2e7d32",
+              color: "white",
+              border: "1px solid #a5d6a7",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
+          >
+            🤖 AI Farmer Assistant
+          </button>
           <NotificationBell />
         </div>
       </nav>
