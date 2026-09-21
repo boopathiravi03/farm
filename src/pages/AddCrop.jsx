@@ -68,7 +68,13 @@ function AddCrop() {
     >
       <h2>🌾 List New Crop</h2>
       {message && (
-        <p style={{ padding: "10px", background: "#e8f5e9", borderRadius: "6px" }}>
+        <p
+          style={{
+            padding: "10px",
+            background: "#e8f5e9",
+            borderRadius: "6px",
+          }}
+        >
           {message}
         </p>
       )}
@@ -287,4 +293,3 @@ function AddCrop() {
 }
 
 export default AddCrop;
-

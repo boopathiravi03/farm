@@ -106,6 +106,20 @@ function FarmerDashboard() {
           >
             ➕ List Crop
           </button>
+          <button
+            onClick={() => navigate("/crop-quality")}
+            style={{
+              padding: "6px 12px",
+              background: "#6a1b9a",
+              color: "white",
+              border: "1px solid #ce93d8",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
+          >
+            📷 AI Crop Quality
+          </button>
           <NotificationBell />
         </div>
       </nav>

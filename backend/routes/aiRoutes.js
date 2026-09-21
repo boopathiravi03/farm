@@ -3,71 +3,26 @@ const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
+
 // ==========================================
 // AI FARMER ASSISTANT
-// ==========================================
-
-router.post("/chat", authMiddleware, async (req, res) => {
-  try {
-    const { message } = req.body;
-
-    if (!message || !message.trim()) {
-      return res.status(400).json({
-        message: "Please enter a question",
-      });
-    }
-
-    const answer = generateFarmAssistantResponse(message);
-
-    res.json({
-      success: true,
-      answer,
-    });
-  } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      message: "AI assistant failed",
-    });
-  }
-});
-
-// ==========================================
-// DEMO AI RESPONSE ENGINE
 // ==========================================
 
 function generateFarmAssistantResponse(message) {
   const text = message.toLowerCase();
 
   if (
-    text.includes("tomato") &&
-    (text.includes("yellow") || text.includes("leaf"))
+    text.includes("yellow") &&
+    text.includes("leaf")
   ) {
-    return `
-Yellow tomato leaves can have several causes,
-including nutrient deficiency, overwatering,
-underwatering, pests or disease.
-
-Check the soil moisture first and inspect
-the underside of the leaves for pests.
-
-If the problem continues, take a clear photo
-of the affected leaves for more accurate
-crop diagnosis.
-    `.trim();
+    return "Yellow leaves can happen because of nutrient deficiency, excess water, poor drainage or disease. Check soil moisture and inspect the leaves for spots or insects.";
   }
 
-  if (text.includes("fertilizer") || text.includes("fertiliser")) {
-    return `
-Before applying fertilizer, check the crop
-stage, soil condition and nutrient requirement.
-
-Avoid applying excessive fertilizer because
-it can damage plants and increase costs.
-
-A soil test can help determine the nutrients
-that are actually required.
-    `.trim();
+  if (
+    text.includes("fertilizer") ||
+    text.includes("fertiliser")
+  ) {
+    return "Use fertilizer according to your crop and soil requirements. Avoid excessive fertilizer because it can damage plants and soil.";
   }
 
   if (
@@ -75,31 +30,14 @@ that are actually required.
     text.includes("selling") ||
     text.includes("market")
   ) {
-    return `
-Before selling your crop, compare available
-market prices, check crop quality, calculate
-your total production cost and consider
-transportation expenses.
-
-Farm Trading can also help you list your crop
-and connect with buyers.
-    `.trim();
+    return "You can list your crop in the Farm Trading marketplace, compare prices and negotiate directly with buyers.";
   }
 
-  if (text.includes("price") || text.includes("profit")) {
-    return `
-For better pricing decisions, consider:
-
-1. Current market price
-2. Crop quality
-3. Quantity available
-4. Transportation cost
-5. Production cost
-6. Buyer demand
-
-Use these factors together rather than
-depending on one price estimate.
-    `.trim();
+  if (
+    text.includes("price") ||
+    text.includes("profit")
+  ) {
+    return "Compare current market prices, production cost, transportation cost and buyer offers before deciding your selling price.";
   }
 
   if (
@@ -107,47 +45,140 @@ depending on one price estimate.
     text.includes("insect") ||
     text.includes("bug")
   ) {
-    return `
-First identify the pest before choosing
-a treatment.
-
-Check the leaves, stems and fruits carefully.
-Look for holes, discoloration, insects or
-webbing.
-
-Avoid using pesticides without identifying
-the problem and following the product label.
-    `.trim();
+    return "Inspect the affected leaves and stems first. Identify the pest before applying any treatment.";
   }
 
-  if (text.includes("crop") || text.includes("plant")) {
-    return `
-When choosing a crop, consider your soil,
-water availability, season, local climate,
-market demand and expected production cost.
-
-A crop that performs well locally may be
-more suitable than choosing only based on
-market price.
-    `.trim();
+  if (
+    text.includes("crop") ||
+    text.includes("plant")
+  ) {
+    return "You can use the Weather & Crop Advisor to check suitable crops based on weather and soil conditions.";
   }
 
-  return `
-I am your Farm Trading AI Assistant 🤖🌾.
-
-You can ask me about:
-
-• Crop management
-• Crop problems
-• Fertilizer basics
-• Farm expenses
-• Selling crops
-• Market considerations
-• Buyer preparation
-• Farm Trading features
-
-Ask your farming question in simple language.
-  `.trim();
+  return "I can help with crops, farming, market prices, crop selling, pests, fertilizer and Farm Trading features.";
 }
+
+
+// ==========================================
+// FARMER ASSISTANT API
+// ==========================================
+
+router.post(
+  "/chat",
+  authMiddleware,
+  async (req, res) => {
+    try {
+      const { message } = req.body;
+
+      if (!message) {
+        return res.status(400).json({
+          success: false,
+          message: "Message is required",
+        });
+      }
+
+      const answer =
+        generateFarmAssistantResponse(message);
+
+      res.json({
+        success: true,
+        answer,
+      });
+    } catch (error) {
+      console.error(error);
+
+      res.status(500).json({
+        success: false,
+        message: "AI assistant failed",
+      });
+    }
+  }
+);
+
+
+// ==========================================
+// CROP QUALITY ANALYSIS
+// ==========================================
+
+router.post(
+  "/crop-quality",
+  authMiddleware,
+  async (req, res) => {
+    try {
+      const {
+        imageName,
+        cropName,
+      } = req.body;
+
+      if (!imageName) {
+        return res.status(400).json({
+          success: false,
+          message: "Crop image is required",
+        });
+      }
+
+      /*
+        Prototype AI analysis.
+
+        Later this function can be replaced
+        with an actual computer vision model.
+      */
+
+      const qualityResults = [
+        {
+          quality: "Good",
+          confidence: 92,
+          freshness: "High",
+          recommendation:
+            "Crop appears suitable for selling. Store it properly and avoid excessive moisture.",
+        },
+        {
+          quality: "Medium",
+          confidence: 78,
+          freshness: "Medium",
+          recommendation:
+            "Crop appears usable but should be sold soon. Check for minor damage or discoloration.",
+        },
+        {
+          quality: "Poor",
+          confidence: 65,
+          freshness: "Low",
+          recommendation:
+            "Crop may have visible quality issues. Inspect carefully before selling.",
+        },
+      ];
+
+      // Deterministic demo result
+      const fileScore =
+        imageName.length % 3;
+
+      const result =
+        qualityResults[fileScore];
+
+      res.json({
+        success: true,
+        cropName: cropName || "Unknown Crop",
+        quality: result.quality,
+        confidence: result.confidence,
+        freshness: result.freshness,
+        recommendation: result.recommendation,
+        analyzedAt: new Date(),
+      });
+
+    } catch (error) {
+      console.error(
+        "Crop quality error:",
+        error
+      );
+
+      res.status(500).json({
+        success: false,
+        message:
+          "Crop quality analysis failed",
+      });
+    }
+  }
+);
+
 
 module.exports = router;

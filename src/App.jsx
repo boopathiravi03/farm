@@ -11,6 +11,7 @@ import FarmerAnalytics from "./pages/FarmerAnalytics";
 import WeatherRecommendations from "./pages/WeatherRecommendations";
 import MarketplaceMap from "./pages/MarketplaceMap";
 import AddCrop from "./pages/AddCrop";
+import CropQualityAI from "./pages/CropQualityAI";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/weather-advisor" element={<WeatherRecommendations />} />
         <Route path="/marketplace-map" element={<MarketplaceMap />} />
         <Route path="/add-crop" element={<AddCrop />} />
+        <Route path="/crop-quality" element={<CropQualityAI />} />
       </Routes>
     </BrowserRouter>
   );

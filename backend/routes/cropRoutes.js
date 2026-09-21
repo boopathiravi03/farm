@@ -35,8 +35,14 @@ router.post("/", protect, async (req, res) => {
       unit: unit || "kg",
       price,
       location,
-      latitude: latitude !== undefined && latitude !== "" && latitude !== null ? Number(latitude) : null,
-      longitude: longitude !== undefined && longitude !== "" && longitude !== null ? Number(longitude) : null,
+      latitude:
+        latitude !== undefined && latitude !== "" && latitude !== null
+          ? Number(latitude)
+          : null,
+      longitude:
+        longitude !== undefined && longitude !== "" && longitude !== null
+          ? Number(longitude)
+          : null,
       description,
       image,
     });

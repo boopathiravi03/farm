@@ -447,3 +447,22 @@ export async function getCropRecommendations(data) {
 
   return response.json();
 }
+
+export async function analyzeCropQuality(imageName, cropName) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/ai/crop-quality`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      imageName,
+      cropName,
+    }),
+  });
+
+  return response.json();
+}
+
