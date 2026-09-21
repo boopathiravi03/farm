@@ -34,6 +34,28 @@ const userSchema = new mongoose.Schema(
     location: {
       type: String,
     },
+
+    district: {
+      type: String,
+    },
+
+    state: {
+      type: String,
+      default: "Tamil Nadu",
+    },
+
+    farmSize: {
+      type: Number,
+    },
+
+    farmSizeUnit: {
+      type: String,
+      default: "acres",
+    },
+
+    profilePhoto: {
+      type: String,
+    },
   },
   {
     timestamps: true,

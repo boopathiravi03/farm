@@ -75,6 +75,10 @@ const analyticsRoutes = require("./routes/analyticsRoutes");
 const weatherRoutes = require("./routes/weatherRoutes");
 const passportRoutes = require("./routes/passportRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const marketPriceRoutes = require("./routes/marketPriceRoutes");
+const profileRoutes = require("./routes/profileRoutes");
+const bankRoutes = require("./routes/bankRoutes");
+const marketPriceService = require("./services/marketPriceService");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/crops", cropRoutes);
@@ -88,6 +92,9 @@ app.use("/api/analytics", analyticsRoutes);
 app.use("/api/weather", weatherRoutes);
 app.use("/api/passports", passportRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/market-prices", marketPriceRoutes);
+app.use("/api/profile", profileRoutes);
+app.use("/api/bank-details", bankRoutes);
 
 // ===============================
 // SOCKET EVENTS
@@ -123,6 +130,7 @@ if (process.env.MONGO_URI) {
     .connect(process.env.MONGO_URI)
     .then(() => {
       console.log("MongoDB connected successfully ✅");
+      marketPriceService.initialize();
     })
     .catch((error) => {
       console.error("MongoDB connection failed ❌");

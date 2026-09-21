@@ -5,19 +5,13 @@ const authMiddleware = require("../middleware/authMiddleware");
 const router = express.Router();
 
 const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY || "",
   apiKey: process.env.GROQ_API_KEY,
 });
 
-// ==========================================
-// FALLBACK RULE-BASED ASSISTANT
-// ==========================================
 // ======================================================
 // CHECK GROQ
 // ======================================================
 
-function generateFarmAssistantFallback(message) {
-  const text = (message || "").toLowerCase();
 function checkGroqKey(res) {
   if (!process.env.GROQ_API_KEY) {
     res.status(500).json({
@@ -25,53 +19,18 @@ function checkGroqKey(res) {
       message: "GROQ_API_KEY is not configured on the server",
     });
 
-  if (text.includes("yellow") && text.includes("leaf")) {
-    return "Yellow leaves can happen because of nutrient deficiency, excess water, poor drainage or disease. Check soil moisture and inspect the leaves for spots or insects.";
     return false;
   }
 
-  if (text.includes("fertilizer") || text.includes("fertiliser")) {
-    return "Use fertilizer according to your crop and soil requirements. Avoid excessive fertilizer because it can damage plants and soil.";
-  }
-
-  if (
-    text.includes("sell") ||
-    text.includes("selling") ||
-    text.includes("market")
-  ) {
-    return "You can list your crop in the Farm Trading marketplace, compare prices and negotiate directly with buyers.";
-  }
-
-  if (text.includes("price") || text.includes("profit")) {
-    return "Compare current market prices, production cost, transportation cost and buyer offers before deciding your selling price.";
-  }
-
-  if (
-    text.includes("pest") ||
-    text.includes("insect") ||
-    text.includes("bug")
-  ) {
-    return "Inspect the affected leaves and stems first. Identify the pest before applying any treatment.";
-  }
-
-  if (text.includes("crop") || text.includes("plant")) {
-    return "You can use the Weather & Crop Advisor to check suitable crops based on weather and soil conditions.";
-  }
-
-  return "I can help with crops, farming, market prices, crop selling, pests, fertilizer and Farm Trading features.";
   return true;
 }
 
-// ==========================================
-// FARMER ASSISTANT API (Groq AI)
-// ==========================================
 // ======================================================
 // AI FARMER ASSISTANT
 // ======================================================
 
 router.post("/chat", authMiddleware, async (req, res) => {
   try {
-    const { message } = req.body;
     const { message, conversation = [] } = req.body;
 
     if (!message || !message.trim()) {
@@ -81,14 +40,6 @@ router.post("/chat", authMiddleware, async (req, res) => {
       });
     }
 
-    if (!process.env.GROQ_API_KEY) {
-      console.warn("⚠️ GROQ_API_KEY not set. Using fallback assistant.");
-      const fallbackReply = generateFarmAssistantFallback(message);
-      return res.json({
-        success: true,
-        reply: fallbackReply,
-        answer: fallbackReply,
-      });
     if (!checkGroqKey(res)) return;
 
     const messages = [
@@ -153,40 +104,23 @@ Rules:
     });
 
     const candidateModels = [
-      process.env.GROQ_MODEL,
       process.env.GROQ_CHAT_MODEL,
       "llama-3.3-70b-versatile",
       "openai/gpt-oss-120b",
       "groq/compound-mini",
     ].filter(Boolean);
 
-    let reply = null;
     let completion = null;
     let lastError = null;
 
     for (const model of candidateModels) {
       try {
-        const completion = await groq.chat.completions.create({
-          messages: [
-            {
-              role: "system",
-              content:
-                "You are a helpful AI agricultural assistant for the Farm Trading platform. Provide concise, practical, and farmer-friendly advice about crops, farming practices, pest management, market pricing, weather considerations, and sustainable agriculture.",
-            },
-            {
-              role: "user",
-              content: message,
-            },
-          ],
         completion = await groq.chat.completions.create({
           model,
           messages,
           temperature: 0.5,
           max_completion_tokens: 900,
         });
-
-        reply = completion.choices[0]?.message?.content || null;
-        if (reply) break;
         if (completion) break;
       } catch (err) {
         lastError = err;
@@ -195,20 +129,19 @@ Rules:
           (err.message && err.message.toLowerCase().includes("not found")) ||
           (err.message && err.message.toLowerCase().includes("does not exist"))
         ) {
-          console.warn(`Groq model ${model} not available, trying next fallback...`);
-          console.warn(`Chat model ${model} not available, trying next fallback...`);
+          console.warn(
+            `Chat model ${model} not available, trying next fallback...`,
+          );
           continue;
         }
         throw err;
       }
     }
 
-    if (!reply && lastError) {
     if (!completion && lastError) {
       throw lastError;
     }
 
-    reply = reply || "No response generated";
     const reply =
       completion.choices?.[0]?.message?.content?.trim() ||
       "Sorry, I could not generate a response.";
@@ -220,24 +153,8 @@ Rules:
       model: completion.model,
     });
   } catch (error) {
-    console.error("Groq AI Error:", error);
     console.error("Groq Chat Error:", error);
 
-    // Graceful fallback to avoid breaking UI experience
-    try {
-      const fallbackReply = generateFarmAssistantFallback(req.body.message || "");
-      return res.json({
-        success: true,
-        reply: fallbackReply,
-        answer: fallbackReply,
-        note: "Response generated by fallback assistant due to AI service issue.",
-      });
-    } catch (fallbackErr) {
-      res.status(500).json({
-        success: false,
-        message: "AI assistant failed to generate a response",
-      });
-    }
     res.status(500).json({
       success: false,
       message: "AI assistant is temporarily unavailable",
@@ -245,23 +162,14 @@ Rules:
   }
 });
 
-// ==========================================
-// CROP QUALITY ANALYSIS
-// ==========================================
 // ======================================================
 // AI CROP QUALITY DETECTION - GROQ VISION
 // ======================================================
 
 router.post("/crop-quality", authMiddleware, async (req, res) => {
   try {
-    const { imageName, cropName } = req.body;
-    const {
-      imageBase64,
-      imageUrl,
-      cropName,
-    } = req.body;
+    const { imageBase64, imageUrl, cropName } = req.body;
 
-    if (!imageName) {
     if (!imageBase64 && !imageUrl) {
       return res.status(400).json({
         success: false,
@@ -269,38 +177,10 @@ router.post("/crop-quality", authMiddleware, async (req, res) => {
       });
     }
 
-    /*
-        Prototype AI analysis.
     if (!checkGroqKey(res)) return;
 
-        Later this function can be replaced
-        with an actual computer vision model.
-      */
     let imageSource;
 
-    const qualityResults = [
-      {
-        quality: "Good",
-        confidence: 92,
-        freshness: "High",
-        recommendation:
-          "Crop appears suitable for selling. Store it properly and avoid excessive moisture.",
-      },
-      {
-        quality: "Medium",
-        confidence: 78,
-        freshness: "Medium",
-        recommendation:
-          "Crop appears usable but should be sold soon. Check for minor damage or discoloration.",
-      },
-      {
-        quality: "Poor",
-        confidence: 65,
-        freshness: "Low",
-        recommendation:
-          "Crop may have visible quality issues. Inspect carefully before selling.",
-      },
-    ];
     if (imageUrl) {
       imageSource = imageUrl;
     } else {
@@ -311,14 +191,11 @@ router.post("/crop-quality", authMiddleware, async (req, res) => {
         : `data:image/jpeg;base64,${imageBase64}`;
     }
 
-    // Deterministic demo result
-    const fileScore = imageName.length % 3;
     const candidateVisionModels = [
       process.env.GROQ_VISION_MODEL,
       "qwen/qwen3.8-27b",
     ].filter(Boolean);
 
-    const result = qualityResults[fileScore];
     let completion = null;
     let lastError = null;
 
@@ -403,7 +280,9 @@ Evaluate:
           (err.message && err.message.toLowerCase().includes("not found")) ||
           (err.message && err.message.toLowerCase().includes("does not exist"))
         ) {
-          console.warn(`Vision model ${model} not available, trying next fallback...`);
+          console.warn(
+            `Vision model ${model} not available, trying next fallback...`,
+          );
           continue;
         }
         throw err;
@@ -414,8 +293,7 @@ Evaluate:
       throw lastError;
     }
 
-    const raw =
-      completion.choices?.[0]?.message?.content || "{}";
+    const raw = completion.choices?.[0]?.message?.content || "{}";
 
     let result;
 
@@ -433,10 +311,6 @@ Evaluate:
     res.json({
       success: true,
       cropName: cropName || "Unknown Crop",
-      quality: result.quality,
-      confidence: result.confidence,
-      freshness: result.freshness,
-      recommendation: result.recommendation,
       quality: result.quality || "Unclear",
       confidence: Number(result.confidence) || 0,
       freshness: result.freshness || "Unclear",
@@ -456,7 +330,6 @@ Evaluate:
       model: completion.model,
     });
   } catch (error) {
-    console.error("Crop quality error:", error);
     console.error("Groq Vision Error:", error);
 
     res.status(500).json({
