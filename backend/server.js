@@ -13,6 +13,7 @@ const orderRoutes = require("./routes/orderRoutes");
 const negotiationRoutes = require("./routes/negotiationRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
+const deliveryRoutes = require("./routes/deliveryRoutes");
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/negotiations", negotiationRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use("/api/deliveries", deliveryRoutes);
 
 // Socket.IO
 io.on("connection", (socket) => {

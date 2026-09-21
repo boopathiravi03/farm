@@ -343,3 +343,49 @@ export async function getFarmerEarnings() {
 
   return response.json();
 }
+
+export async function createDelivery(orderId) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/deliveries`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      orderId,
+    }),
+  });
+
+  return response.json();
+}
+
+export async function getDelivery(orderId) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/deliveries/order/${orderId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function updateDeliveryStatus(deliveryId, status) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/deliveries/${deliveryId}/status`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      status,
+    }),
+  });
+
+  return response.json();
+}

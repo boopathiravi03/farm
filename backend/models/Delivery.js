@@ -1,7 +1,14 @@
 const mongoose = require("mongoose");
 
-const orderSchema = new mongoose.Schema(
+const deliverySchema = new mongoose.Schema(
   {
+    order: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Order",
+      required: true,
+      unique: true,
+    },
+
     buyer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -14,52 +21,50 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
 
-    crop: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Crop",
-      required: true,
-    },
-
-    quantity: {
-      type: Number,
-      required: true,
-      min: 1,
-    },
-
-    pricePerUnit: {
-      type: Number,
-      required: true,
-    },
-
-    totalAmount: {
-      type: Number,
-      required: true,
-    },
-
     deliveryAddress: {
       type: String,
       required: true,
     },
 
+    trackingId: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+
+    courierName: {
+      type: String,
+      default: "Farm Trading Delivery",
+    },
+
     status: {
       type: String,
       enum: [
-        "pending",
-        "accepted",
-        "rejected",
         "processing",
         "packed",
         "shipped",
         "out_for_delivery",
         "delivered",
-        "cancelled",
       ],
-      default: "pending",
+      default: "processing",
+    },
+
+    estimatedDelivery: {
+      type: Date,
+      default: null,
+    },
+
+    deliveredAt: {
+      type: Date,
+      default: null,
     },
   },
   {
     timestamps: true,
-  },
+  }
 );
 
-module.exports = mongoose.model("Order", orderSchema);
+module.exports = mongoose.model(
+  "Delivery",
+  deliverySchema
+);

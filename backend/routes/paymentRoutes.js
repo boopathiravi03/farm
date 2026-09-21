@@ -8,17 +8,13 @@ const createNotification = require("../utils/notificationHelper");
 
 const router = express.Router();
 
-
 // ==========================================
 // CREATE PAYMENT
 // ==========================================
 
 router.post("/", authMiddleware, async (req, res) => {
   try {
-    const {
-      orderId,
-      paymentMethod,
-    } = req.body;
+    const { orderId, paymentMethod } = req.body;
 
     if (!orderId || !paymentMethod) {
       return res.status(400).json({
@@ -55,10 +51,7 @@ router.post("/", authMiddleware, async (req, res) => {
 
     // Generate demo transaction ID
     const transactionId =
-      "FTX-" +
-      Date.now() +
-      "-" +
-      Math.floor(Math.random() * 10000);
+      "FTX-" + Date.now() + "-" + Math.floor(Math.random() * 10000);
 
     // Create payment
     const payment = await Payment.create({
@@ -102,7 +95,6 @@ router.post("/", authMiddleware, async (req, res) => {
       payment,
       transaction,
     });
-
   } catch (error) {
     console.error(error);
 
@@ -112,98 +104,78 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
-
 // ==========================================
 // BUYER PAYMENT HISTORY
 // ==========================================
 
-router.get(
-  "/my-payments",
-  authMiddleware,
-  async (req, res) => {
-    try {
-      const payments = await Payment.find({
-        buyer: req.user.id,
-      })
-        .populate("order")
-        .sort({ createdAt: -1 });
+router.get("/my-payments", authMiddleware, async (req, res) => {
+  try {
+    const payments = await Payment.find({
+      buyer: req.user.id,
+    })
+      .populate("order")
+      .sort({ createdAt: -1 });
 
-      res.json(payments);
-
-    } catch (error) {
-      res.status(500).json({
-        message: "Failed to get payment history",
-      });
-    }
+    res.json(payments);
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to get payment history",
+    });
   }
-);
-
+});
 
 // ==========================================
 // FARMER EARNINGS
 // ==========================================
 
-router.get(
-  "/farmer-earnings",
-  authMiddleware,
-  async (req, res) => {
-    try {
-      const transactions = await Transaction.find({
-        farmer: req.user.id,
-        status: "completed",
-        type: "purchase",
-      })
-        .populate("order")
-        .sort({ createdAt: -1 });
+router.get("/farmer-earnings", authMiddleware, async (req, res) => {
+  try {
+    const transactions = await Transaction.find({
+      farmer: req.user.id,
+      status: "completed",
+      type: "purchase",
+    })
+      .populate("order")
+      .sort({ createdAt: -1 });
 
-      const totalEarnings = transactions.reduce(
-        (total, transaction) =>
-          total + transaction.amount,
-        0
-      );
+    const totalEarnings = transactions.reduce(
+      (total, transaction) => total + transaction.amount,
+      0,
+    );
 
-      res.json({
-        totalEarnings,
-        transactions,
-      });
-
-    } catch (error) {
-      res.status(500).json({
-        message: "Failed to get farmer earnings",
-      });
-    }
+    res.json({
+      totalEarnings,
+      transactions,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to get farmer earnings",
+    });
   }
-);
-
+});
 
 // ==========================================
 // GET PAYMENT BY ORDER
 // ==========================================
 
-router.get(
-  "/order/:orderId",
-  authMiddleware,
-  async (req, res) => {
-    try {
-      const payment = await Payment.findOne({
-        order: req.params.orderId,
-      });
+router.get("/order/:orderId", authMiddleware, async (req, res) => {
+  try {
+    const payment = await Payment.findOne({
+      order: req.params.orderId,
+    });
 
-      if (!payment) {
-        return res.status(404).json({
-          message: "Payment not found",
-        });
-      }
-
-      res.json(payment);
-
-    } catch (error) {
-      res.status(500).json({
-        message: "Failed to get payment",
+    if (!payment) {
+      return res.status(404).json({
+        message: "Payment not found",
       });
     }
-  }
-);
 
+    res.json(payment);
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to get payment",
+    });
+  }
+});
 
 module.exports = router;

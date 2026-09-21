@@ -68,6 +68,23 @@ function MyOrders() {
                 💳 Pay Now
               </button>
             )}
+
+            <button
+              onClick={() => navigate(`/order-tracking?orderId=${order._id}`)}
+              style={{
+                marginTop: "8px",
+                marginLeft: order.status === "pending" ? "8px" : "0",
+                padding: "6px 14px",
+                backgroundColor: "#1976d2",
+                color: "white",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+                fontWeight: "bold",
+              }}
+            >
+              🚚 Track Order
+            </button>
           </div>
         ))
       )}

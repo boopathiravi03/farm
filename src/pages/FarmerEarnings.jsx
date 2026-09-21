@@ -71,3 +71,4 @@ function FarmerEarnings() {
 }
 
 export default FarmerEarnings;
+

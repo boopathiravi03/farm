@@ -120,7 +120,9 @@ router.put("/:id/status", protect, async (req, res) => {
       "accepted",
       "rejected",
       "processing",
+      "packed",
       "shipped",
+      "out_for_delivery",
       "delivered",
       "cancelled",
     ];
