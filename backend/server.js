@@ -17,11 +17,18 @@ const PORT = process.env.PORT || 5000;
 // CHECK ENVIRONMENT VARIABLES
 // ===============================
 
-if (!process.env.MONGO_URI) {
+const mongoUriExists = Boolean(process.env.MONGO_URI);
+const jwtSecretExists = Boolean(process.env.JWT_SECRET);
+
+console.log(`Starting Farm Trading API on port: ${PORT}`);
+console.log(`MONGO_URI configured: ${mongoUriExists ? "Yes ✅" : "No ❌"}`);
+console.log(`JWT_SECRET configured: ${jwtSecretExists ? "Yes ✅" : "No ❌"}`);
+
+if (!mongoUriExists) {
   console.error("❌ MONGO_URI environment variable is missing");
 }
 
-if (!process.env.JWT_SECRET) {
+if (!jwtSecretExists) {
   console.error("❌ JWT_SECRET environment variable is missing");
 }
 
@@ -97,17 +104,11 @@ io.on("connection", (socket) => {
 
   socket.on("joinUser", (userId) => {
     socket.join(`user_${userId}`);
-
-    console.log(
-      `User ${userId} joined notification room`
-    );
+    console.log(`User ${userId} joined notification room`);
   });
 
   socket.on("disconnect", () => {
-    console.log(
-      "User disconnected:",
-      socket.id
-    );
+    console.log("User disconnected:", socket.id);
   });
 });
 
@@ -115,28 +116,23 @@ app.set("io", io);
 
 
 // ===============================
-// MONGODB + SERVER START
+// START SERVER & CONNECT MONGODB
 // ===============================
 
-console.log(`Starting server on port: ${PORT}`);
-console.log(`MONGO_URI exists: ${process.env.MONGO_URI ? "Yes ✅" : "No ❌"}`);
+// Start listening immediately so Render detects port binding and health check responds
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
-if (!process.env.MONGO_URI) {
-  console.error("MONGO_URI environment variable is missing");
-  process.exit(1);
-}
-
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("MongoDB connected successfully ✅");
-
-    server.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+// Connect to MongoDB
+if (process.env.MONGO_URI) {
+  mongoose
+    .connect(process.env.MONGO_URI)
+    .then(() => {
+      console.log("MongoDB connected successfully ✅");
+    })
+    .catch((error) => {
+      console.error("MongoDB connection failed ❌");
+      console.error("Error details:", error.message);
     });
-  })
-  .catch((error) => {
-    console.error("MongoDB connection failed ❌");
-    console.error("Error details:", error.message);
-    process.exit(1);
-  });
+}
