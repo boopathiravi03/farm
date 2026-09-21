@@ -181,37 +181,35 @@ router.get("/farmer", authMiddleware, async (req, res) => {
 
     if (activeCrops === 0) {
       insights.push(
-        "You currently have no active crop listings. Consider adding new crops."
+        "You currently have no active crop listings. Consider adding new crops.",
       );
     }
 
     if (pendingOrders > 0) {
       insights.push(
-        `You have ${pendingOrders} pending order(s) that need attention.`
+        `You have ${pendingOrders} pending order(s) that need attention.`,
       );
     }
 
     if (bestSellingCrops.length > 0) {
       insights.push(
-        `${bestSellingCrops[0].cropName} is currently your best-selling crop.`
+        `${bestSellingCrops[0].cropName} is currently your best-selling crop.`,
       );
     }
 
     if (deliveredOrders > 0) {
       insights.push(
-        `You have successfully delivered ${deliveredOrders} order(s).`
+        `You have successfully delivered ${deliveredOrders} order(s).`,
       );
     }
 
     if (totalRevenue === 0) {
-      insights.push(
-        "Start selling crops to generate your first sales."
-      );
+      insights.push("Start selling crops to generate your first sales.");
     } else {
       insights.push(
         `Your total completed sales revenue is ₹${totalRevenue.toLocaleString(
-          "en-IN"
-        )}.`
+          "en-IN",
+        )}.`,
       );
     }
 

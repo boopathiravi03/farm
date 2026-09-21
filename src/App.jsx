@@ -8,6 +8,7 @@ import FarmerEarnings from "./pages/FarmerEarnings";
 import OrderTracking from "./pages/OrderTracking";
 import AIFarmerAssistant from "./pages/AIFarmerAssistant";
 import FarmerAnalytics from "./pages/FarmerAnalytics";
+import WeatherRecommendations from "./pages/WeatherRecommendations";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/order-tracking" element={<OrderTracking />} />
         <Route path="/ai-assistant" element={<AIFarmerAssistant />} />
         <Route path="/farmer-analytics" element={<FarmerAnalytics />} />
+        <Route path="/weather-advisor" element={<WeatherRecommendations />} />
       </Routes>
     </BrowserRouter>
   );

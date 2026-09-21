@@ -36,19 +36,11 @@ function FarmerAnalytics() {
   }
 
   if (loading) {
-    return (
-      <div className="analytics-loading">
-        Loading analytics...
-      </div>
-    );
+    return <div className="analytics-loading">Loading analytics...</div>;
   }
 
   if (!data) {
-    return (
-      <div className="analytics-error">
-        Unable to load analytics.
-      </div>
-    );
+    return <div className="analytics-error">Unable to load analytics.</div>;
   }
 
   return (

@@ -64,6 +64,20 @@ function FarmerDashboard() {
           >
             📊 Analytics Dashboard
           </button>
+          <button
+            onClick={() => navigate("/weather-advisor")}
+            style={{
+              padding: "6px 12px",
+              background: "#0288d1",
+              color: "white",
+              border: "1px solid #81d4fa",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
+          >
+            🌦️ Weather & Crop Advisor
+          </button>
           <NotificationBell />
         </div>
       </nav>

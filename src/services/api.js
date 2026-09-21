@@ -418,3 +418,30 @@ export async function getFarmerAnalytics() {
 
   return response.json();
 }
+
+export async function getWeather() {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/weather`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function getCropRecommendations(data) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/weather/recommend`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  return response.json();
+}
