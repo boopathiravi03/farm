@@ -78,11 +78,17 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     children: [
                       Text(
                         'Track Order ${o['id']}',
-                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Text(
                         '${o['crop']} (${o['quantity']}) • ${o['buyer']}',
-                        style: const TextStyle(color: Colors.black54, fontSize: 13),
+                        style: const TextStyle(
+                          color: Colors.black54,
+                          fontSize: 13,
+                        ),
                       ),
                     ],
                   ),
@@ -94,10 +100,26 @@ class _OrdersScreenState extends State<OrdersScreen> {
               ),
               const Divider(height: 24),
 
-              _timelineStep('Order Placed & Accepted', 'Payment secured in Farm Trading Escrow', step >= 0),
-              _timelineStep('Harvest Packaging Complete', 'Quality verified Good • Ready for pickup', step >= 1),
-              _timelineStep('Vehicle Dispatched / In Transit', 'Driver assigned (TN-31-AB-4812)', step >= 2),
-              _timelineStep('Delivered & Funds Released', 'Direct transfer to your registered bank account', step >= 3),
+              _timelineStep(
+                'Order Placed & Accepted',
+                'Payment secured in Farm Trading Escrow',
+                step >= 0,
+              ),
+              _timelineStep(
+                'Harvest Packaging Complete',
+                'Quality verified Good • Ready for pickup',
+                step >= 1,
+              ),
+              _timelineStep(
+                'Vehicle Dispatched / In Transit',
+                'Driver assigned (TN-31-AB-4812)',
+                step >= 2,
+              ),
+              _timelineStep(
+                'Delivered & Funds Released',
+                'Direct transfer to your registered bank account',
+                step >= 3,
+              ),
 
               const SizedBox(height: 16),
 
@@ -108,7 +130,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF167D39),
                     foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                   ),
                   child: const Text('Close Tracking'),
@@ -140,14 +164,19 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 Text(
                   title,
                   style: TextStyle(
-                    fontWeight: isCompleted ? FontWeight.bold : FontWeight.normal,
+                    fontWeight: isCompleted
+                        ? FontWeight.bold
+                        : FontWeight.normal,
                     color: isCompleted ? Colors.black87 : Colors.grey,
                     fontSize: 14,
                   ),
                 ),
                 Text(
                   subtitle,
-                  style: TextStyle(color: isCompleted ? Colors.black54 : Colors.grey.shade400, fontSize: 12),
+                  style: TextStyle(
+                    color: isCompleted ? Colors.black54 : Colors.grey.shade400,
+                    fontSize: 12,
+                  ),
                 ),
               ],
             ),
@@ -180,7 +209,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
           children: [
             // Status filters
             Row(
-              children: ['All', 'Processing', 'In Transit', 'Delivered'].map((f) {
+              children: ['All', 'Processing', 'In Transit', 'Delivered'].map((
+                f,
+              ) {
                 final isSelected = selectedFilter == f;
                 return Padding(
                   padding: const EdgeInsets.only(right: 8),
@@ -190,8 +221,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     selectedColor: const Color(0xFFC8E6C9),
                     backgroundColor: Colors.white,
                     labelStyle: TextStyle(
-                      color: isSelected ? const Color(0xFF167D39) : Colors.black87,
-                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                      color: isSelected
+                          ? const Color(0xFF167D39)
+                          : Colors.black87,
+                      fontWeight: isSelected
+                          ? FontWeight.bold
+                          : FontWeight.normal,
                       fontSize: 13,
                     ),
                     onSelected: (val) {
@@ -226,7 +261,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 4,
+                              ),
                               decoration: BoxDecoration(
                                 color: color.shade50,
                                 borderRadius: BorderRadius.circular(10),
@@ -248,7 +286,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
                             ),
                             Text(
                               o['date'],
-                              style: const TextStyle(color: Colors.black45, fontSize: 12),
+                              style: const TextStyle(
+                                color: Colors.black45,
+                                fontSize: 12,
+                              ),
                             ),
                           ],
                         ),
@@ -257,7 +298,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
                         Row(
                           children: [
-                            Text(o['cropIcon'], style: const TextStyle(fontSize: 32)),
+                            Text(
+                              o['cropIcon'],
+                              style: const TextStyle(fontSize: 32),
+                            ),
                             const SizedBox(width: 12),
                             Expanded(
                               child: Column(
@@ -265,12 +309,18 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                 children: [
                                   Text(
                                     '${o['crop']} • ${o['quantity']}',
-                                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17,
+                                    ),
                                   ),
                                   const SizedBox(height: 2),
                                   Text(
                                     'Buyer: ${o['buyer']} (${o['buyerLocation']})',
-                                    style: const TextStyle(color: Colors.black54, fontSize: 13),
+                                    style: const TextStyle(
+                                      color: Colors.black54,
+                                      fontSize: 13,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -293,21 +343,37 @@ class _OrdersScreenState extends State<OrdersScreen> {
                           child: isDelivered
                               ? OutlinedButton.icon(
                                   onPressed: () => _showTrackingModal(o),
-                                  icon: const Icon(Icons.receipt_long, color: Color(0xFF167D39), size: 18),
-                                  label: const Text('View Delivery Details', style: TextStyle(color: Color(0xFF167D39))),
+                                  icon: const Icon(
+                                    Icons.receipt_long,
+                                    color: Color(0xFF167D39),
+                                    size: 18,
+                                  ),
+                                  label: const Text(
+                                    'View Delivery Details',
+                                    style: TextStyle(color: Color(0xFF167D39)),
+                                  ),
                                   style: OutlinedButton.styleFrom(
-                                    side: const BorderSide(color: Color(0xFF167D39)),
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                    side: const BorderSide(
+                                      color: Color(0xFF167D39),
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
                                   ),
                                 )
                               : ElevatedButton.icon(
                                   onPressed: () => _showTrackingModal(o),
-                                  icon: const Icon(Icons.local_shipping_outlined, size: 18),
+                                  icon: const Icon(
+                                    Icons.local_shipping_outlined,
+                                    size: 18,
+                                  ),
                                   label: const Text('Track Order Live'),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: color.shade700,
                                     foregroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
                                   ),
                                 ),
                         ),
@@ -323,4 +389,3 @@ class _OrdersScreenState extends State<OrdersScreen> {
     );
   }
 }
-

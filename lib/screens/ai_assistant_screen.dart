@@ -17,11 +17,7 @@ class _ChatMessage {
   final bool isUser;
   final DateTime time;
 
-  _ChatMessage({
-    required this.text,
-    required this.isUser,
-    required this.time,
-  });
+  _ChatMessage({required this.text, required this.isUser, required this.time});
 }
 
 class _AiAssistantScreenState extends State<AiAssistantScreen> {
@@ -31,7 +27,8 @@ class _AiAssistantScreenState extends State<AiAssistantScreen> {
 
   final List<_ChatMessage> _messages = [
     _ChatMessage(
-      text: "Namaste! I am Farm Trading AI, your personal agricultural assistant. How can I help you with your crops, market prices, or farming decisions today?",
+      text:
+          "Namaste! I am Farm Trading AI, your personal agricultural assistant. How can I help you with your crops, market prices, or farming decisions today?",
       isUser: false,
       time: DateTime.now(),
     ),
@@ -59,11 +56,9 @@ class _AiAssistantScreenState extends State<AiAssistantScreen> {
     _textController.clear();
 
     setState(() {
-      _messages.add(_ChatMessage(
-        text: text,
-        isUser: true,
-        time: DateTime.now(),
-      ));
+      _messages.add(
+        _ChatMessage(text: text, isUser: true, time: DateTime.now()),
+      );
       _isLoading = true;
     });
 
@@ -71,28 +66,29 @@ class _AiAssistantScreenState extends State<AiAssistantScreen> {
 
     try {
       final token = widget.token ?? await AuthService.getToken() ?? '';
-      final response = await http.post(
-        Uri.parse('$_renderUrl/ai/chat'),
-        headers: {
-          'Content-Type': 'application/json',
-          if (token.isNotEmpty) 'Authorization': 'Bearer $token',
-        },
-        body: jsonEncode({
-          'message': text,
-        }),
-      ).timeout(const Duration(seconds: 12));
+      final response = await http
+          .post(
+            Uri.parse('$_renderUrl/ai/chat'),
+            headers: {
+              'Content-Type': 'application/json',
+              if (token.isNotEmpty) 'Authorization': 'Bearer $token',
+            },
+            body: jsonEncode({'message': text}),
+          )
+          .timeout(const Duration(seconds: 12));
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        final aiReply = data['reply'] ?? data['message'] ?? 'I could not generate an answer at this moment.';
+        final aiReply =
+            data['reply'] ??
+            data['message'] ??
+            'I could not generate an answer at this moment.';
 
         if (!mounted) return;
         setState(() {
-          _messages.add(_ChatMessage(
-            text: aiReply,
-            isUser: false,
-            time: DateTime.now(),
-          ));
+          _messages.add(
+            _ChatMessage(text: aiReply, isUser: false, time: DateTime.now()),
+          );
         });
       } else {
         _useFallbackResponse(text);
@@ -109,35 +105,41 @@ class _AiAssistantScreenState extends State<AiAssistantScreen> {
 
   void _useFallbackResponse(String question) {
     final q = question.toLowerCase();
-    String reply = "I analyzed current market conditions in Tamil Nadu for your query:\n\n";
+    String reply =
+        "I analyzed current market conditions in Tamil Nadu for your query:\n\n";
 
     if (q.contains('tomato') || q.contains('price is low')) {
-      reply += "🍅 **Tomato Selling Strategy**:\n"
+      reply +=
+          "🍅 **Tomato Selling Strategy**:\n"
           "1. Current Panruti mandi rate is ₹32/Kg, but Chennai wholesale is ₹36/Kg.\n"
           "2. If local prices are depressed, consider grading your harvest into Premium (commanding +₹3/kg).\n"
           "3. Tuesday and Friday show the highest demand. Storing for 48 hours in a cool shaded area can yield better returns.";
     } else if (q.contains('weather') || q.contains('rain')) {
-      reply += "🌦️ **Weather Farm Advice**:\n"
+      reply +=
+          "🌦️ **Weather Farm Advice**:\n"
           "• Moderate rain is expected in Panruti / Cuddalore region within 48 hours.\n"
           "• **Action**: Avoid spraying pesticides or chemical fertilizers before showers to prevent runoff.\n"
           "• Ensure drainage channels around vegetable beds are clear.";
-    } else if (q.contains('fertilizer') || q.contains('pest') || q.contains('disease') || q.contains('crop problem')) {
-      reply += "🌿 **Crop Health Guidance**:\n"
+    } else if (q.contains('fertilizer') ||
+        q.contains('pest') ||
+        q.contains('disease') ||
+        q.contains('crop problem')) {
+      reply +=
+          "🌿 **Crop Health Guidance**:\n"
           "• For leaf curl or pest infestation, apply organic neem oil spray (5ml per liter) during morning hours.\n"
           "• Balanced N-P-K (19:19:19) foliar spray is recommended during the flowering and fruit-setting stage.";
     } else {
-      reply += "🌾 **Farming & Trade Insight**:\n"
+      reply +=
+          "🌾 **Farming & Trade Insight**:\n"
           "• Direct trader matching on Farm Trading reduces commission losses by up to 10%.\n"
           "• Use our **AI Fair Price** calculator before committing to buyer offers to protect your revenue margin.";
     }
 
     if (!mounted) return;
     setState(() {
-      _messages.add(_ChatMessage(
-        text: reply,
-        isUser: false,
-        time: DateTime.now(),
-      ));
+      _messages.add(
+        _ChatMessage(text: reply, isUser: false, time: DateTime.now()),
+      );
     });
   }
 
@@ -180,11 +182,19 @@ class _AiAssistantScreenState extends State<AiAssistantScreen> {
               children: [
                 Text(
                   'Farm AI Assistant',
-                  style: TextStyle(color: Colors.black87, fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   'Powered by Groq • Online',
-                  style: TextStyle(color: Color(0xFF167D39), fontSize: 11, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    color: Color(0xFF167D39),
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ],
             ),
@@ -246,12 +256,19 @@ class _AiAssistantScreenState extends State<AiAssistantScreen> {
                   const SizedBox(
                     width: 16,
                     height: 16,
-                    child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFF167D39)),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Color(0xFF167D39),
+                    ),
                   ),
                   const SizedBox(width: 10),
                   Text(
                     'Farm AI is thinking...',
-                    style: TextStyle(color: Colors.grey.shade600, fontSize: 12, fontStyle: FontStyle.italic),
+                    style: TextStyle(
+                      color: Colors.grey.shade600,
+                      fontSize: 12,
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
                 ],
               ),
@@ -281,10 +298,16 @@ class _AiAssistantScreenState extends State<AiAssistantScreen> {
                       textCapitalization: TextCapitalization.sentences,
                       decoration: InputDecoration(
                         hintText: 'Ask anything about farming...',
-                        hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 14),
+                        hintStyle: TextStyle(
+                          color: Colors.grey.shade500,
+                          fontSize: 14,
+                        ),
                         filled: true,
                         fillColor: const Color(0xFFF1F4F1),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(24),
                           borderSide: BorderSide.none,
@@ -298,7 +321,11 @@ class _AiAssistantScreenState extends State<AiAssistantScreen> {
                     radius: 22,
                     backgroundColor: const Color(0xFF167D39),
                     child: IconButton(
-                      icon: const Icon(Icons.send, color: Colors.white, size: 20),
+                      icon: const Icon(
+                        Icons.send,
+                        color: Colors.white,
+                        size: 20,
+                      ),
                       onPressed: _handleSubmitted,
                     ),
                   ),
@@ -315,7 +342,9 @@ class _AiAssistantScreenState extends State<AiAssistantScreen> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 14),
       child: Row(
-        mainAxisAlignment: msg.isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: msg.isUser
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (!msg.isUser) ...[
@@ -356,4 +385,3 @@ class _AiAssistantScreenState extends State<AiAssistantScreen> {
     );
   }
 }
-

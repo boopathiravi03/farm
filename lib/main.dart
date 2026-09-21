@@ -858,14 +858,10 @@ class _FarmerDashboardState extends State<FarmerDashboard> {
               children: [
                 Expanded(
                   child: quickAction(
-                    icon: Icons.hub_outlined,
-                    title: 'Supply Chain',
-                    color: const Color(0xFF00897B),
                     icon: Icons.smart_toy_outlined,
                     title: 'AI Assistant',
                     color: const Color(0xFF167D39),
                     onTap: () {
-                      Navigator.pushNamed(context, '/supply-chain');
                       Navigator.pushNamed(context, '/ai-assistant');
                     },
                   ),
@@ -873,14 +869,10 @@ class _FarmerDashboardState extends State<FarmerDashboard> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: quickAction(
-                    icon: Icons.handshake,
-                    title: 'AI Negotiation',
-                    color: const Color(0xFF5E35B1),
                     icon: Icons.hub_outlined,
                     title: 'Supply Chain',
                     color: const Color(0xFF00897B),
                     onTap: () {
-                      Navigator.pushNamed(context, '/negotiation');
                       Navigator.pushNamed(context, '/supply-chain');
                     },
                   ),
@@ -894,14 +886,10 @@ class _FarmerDashboardState extends State<FarmerDashboard> {
               children: [
                 Expanded(
                   child: quickAction(
-                    icon: Icons.camera_alt,
-                    title: 'Crop Quality',
-                    color: const Color(0xFF2E7D32),
                     icon: Icons.handshake,
                     title: 'AI Negotiation',
                     color: const Color(0xFF5E35B1),
                     onTap: () {
-                      Navigator.pushNamed(context, '/crop-quality');
                       Navigator.pushNamed(context, '/negotiation');
                     },
                   ),
@@ -909,14 +897,10 @@ class _FarmerDashboardState extends State<FarmerDashboard> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: quickAction(
-                    icon: Icons.qr_code_2,
-                    title: 'Crop Passport',
-                    color: const Color(0xFF00897B),
                     icon: Icons.camera_alt,
                     title: 'Crop Quality',
                     color: const Color(0xFF2E7D32),
                     onTap: () {
-                      Navigator.pushNamed(context, '/crop-passport');
                       Navigator.pushNamed(context, '/crop-quality');
                     },
                   ),
@@ -930,14 +914,10 @@ class _FarmerDashboardState extends State<FarmerDashboard> {
               children: [
                 Expanded(
                   child: quickAction(
-                    icon: Icons.map,
-                    title: 'Farm Map',
-                    color: const Color(0xFF1976D2),
                     icon: Icons.qr_code_2,
                     title: 'Crop Passport',
                     color: const Color(0xFF00897B),
                     onTap: () {
-                      Navigator.pushNamed(context, '/farm-map');
                       Navigator.pushNamed(context, '/crop-passport');
                     },
                   ),
@@ -945,14 +925,10 @@ class _FarmerDashboardState extends State<FarmerDashboard> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: quickAction(
-                    icon: Icons.wb_sunny_outlined,
-                    title: 'Weather Advisor',
-                    color: const Color(0xFF167D39),
                     icon: Icons.map,
                     title: 'Farm Map',
                     color: const Color(0xFF1976D2),
                     onTap: () {
-                      Navigator.pushNamed(context, '/weather');
                       Navigator.pushNamed(context, '/farm-map');
                     },
                   ),
@@ -996,17 +972,6 @@ class _FarmerDashboardState extends State<FarmerDashboard> {
                       );
 
                       loadOfflineStatus();
-                    },
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: quickAction(
-                    icon: Icons.trending_up,
-                    title: 'Market Prices',
-                    color: const Color(0xFF0288D1),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/market-prices');
                     },
                   ),
                 ),
@@ -1322,15 +1287,6 @@ class OrdersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
-      child: Center(
-        child: Text(
-          'Orders\nComing Soon',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
     return const OrdersScreen();
   }
 }
@@ -1348,7 +1304,6 @@ class ProfilePage extends StatelessWidget {
       child: FutureBuilder<String?>(
         future: AuthService.getPhone(),
         builder: (context, snapshot) {
-          final phone = snapshot.data ?? 'Not available';
           final phone = snapshot.data ?? '+91 98765 43210';
 
           return SingleChildScrollView(
@@ -1356,23 +1311,18 @@ class ProfilePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
                 const Text(
                   'My Profile',
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 25),
                 const SizedBox(height: 18),
 
                 // Farmer Header Card
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(22),
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
                     borderRadius: BorderRadius.circular(22),
                     boxShadow: const [
                       BoxShadow(
@@ -1382,29 +1332,17 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Column(
                   child: Row(
                     children: [
                       const CircleAvatar(
-                        radius: 42,
                         radius: 36,
                         backgroundColor: Color(0xFFE8F5E9),
                         child: Icon(
                           Icons.person,
-                          size: 45,
-                          color: Color(0xFF2E7D32),
+                          size: 38,
+                          color: Color(0xFF167D39),
                         ),
-                        child: Icon(Icons.person, size: 38, color: Color(0xFF167D39)),
                       ),
-                      const SizedBox(height: 15),
-                      FutureBuilder<String?>(
-                        future: AuthService.getRole(),
-                        builder: (context, roleSnapshot) {
-                          return Text(
-                            roleSnapshot.data ?? 'User',
-                            style: const TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
                       const SizedBox(width: 16),
                       Expanded(
                         child: Column(
@@ -1414,52 +1352,62 @@ class ProfilePage extends StatelessWidget {
                               children: [
                                 const Text(
                                   'Dharun',
-                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 const SizedBox(width: 6),
-                                const Icon(Icons.verified, size: 18, color: Color(0xFF167D39)),
+                                const Icon(
+                                  Icons.verified,
+                                  size: 18,
+                                  color: Color(0xFF167D39),
+                                ),
                               ],
                             ),
-                          );
-                        },
                             const SizedBox(height: 4),
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 3,
+                              ),
                               decoration: BoxDecoration(
                                 color: const Color(0xFFE8F5E9),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: const Text(
                                 '🌾 Farmer',
-                                style: TextStyle(color: Color(0xFF167D39), fontWeight: FontWeight.bold, fontSize: 12),
+                                style: TextStyle(
+                                  color: Color(0xFF167D39),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 4),
                             const Row(
                               children: [
-                                Icon(Icons.location_on, size: 14, color: Colors.black45),
+                                Icon(
+                                  Icons.location_on,
+                                  size: 14,
+                                  color: Colors.black45,
+                                ),
                                 SizedBox(width: 3),
                                 Text(
                                   'Panruti, Tamil Nadu',
-                                  style: TextStyle(color: Colors.black54, fontSize: 13),
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 13,
+                                  ),
                                 ),
                               ],
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 6),
-                      Text(
-                        phone,
-                        style: TextStyle(color: Colors.grey.shade600),
-                      ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 25),
-                profileOption(
-                  Icons.person_outline,
-                  'Edit Profile',
 
                 const SizedBox(height: 20),
 
@@ -1469,8 +1417,16 @@ class ProfilePage extends StatelessWidget {
                 _sectionHeader('Personal Details'),
                 _infoCard([
                   _infoRow(Icons.phone_android, 'Phone', phone),
-                  _infoRow(Icons.email_outlined, 'Email', 'dharun.farmer@farmtrading.com'),
-                  _infoRow(Icons.pin_drop_outlined, 'Farm Location', 'Panruti, Cuddalore District'),
+                  _infoRow(
+                    Icons.email_outlined,
+                    'Email',
+                    'dharun.farmer@farmtrading.com',
+                  ),
+                  _infoRow(
+                    Icons.pin_drop_outlined,
+                    'Farm Location',
+                    'Panruti, Cuddalore District',
+                  ),
                 ]),
 
                 const SizedBox(height: 16),
@@ -1480,9 +1436,17 @@ class ProfilePage extends StatelessWidget {
                 // ─────────────────────────────
                 _sectionHeader('Farm Details'),
                 _infoCard([
-                  _infoRow(Icons.eco_outlined, 'Main Crops', 'Tomato, Onion, Paddy'),
+                  _infoRow(
+                    Icons.eco_outlined,
+                    'Main Crops',
+                    'Tomato, Onion, Paddy',
+                  ),
                   _infoRow(Icons.straighten_outlined, 'Farm Size', '5.5 Acres'),
-                  _infoRow(Icons.agriculture_outlined, 'Farming Type', 'Precision & Organic Farming'),
+                  _infoRow(
+                    Icons.agriculture_outlined,
+                    'Farming Type',
+                    'Precision & Organic Farming',
+                  ),
                 ]),
 
                 const SizedBox(height: 16),
@@ -1498,32 +1462,23 @@ class ProfilePage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => ProfileScreen(token: token),
-                      ),
-                    );
-                  },
-                ),
-                profileOption(
-                  Icons.account_balance,
-                  'Bank & Payment Details',
-                  onTap: () async {
-                    final token = await AuthService.getToken() ?? '';
-                    if (!context.mounted) return;
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
                         builder: (_) => BankDetailsScreen(token: token),
                       ),
                     );
                   },
                   child: _infoCard([
-                    _infoRow(Icons.account_balance, 'Account Details', 'State Bank of India (••••••••4321)'),
-                    _infoRow(Icons.credit_card, 'Payment UPI', 'dharun@okaxis • Verified'),
+                    _infoRow(
+                      Icons.account_balance,
+                      'Account Details',
+                      'State Bank of India (••••••••4321)',
+                    ),
+                    _infoRow(
+                      Icons.credit_card,
+                      'Payment UPI',
+                      'dharun@okaxis • Verified',
+                    ),
                   ]),
                 ),
-                profileOption(Icons.notifications_outlined, 'Notifications'),
-                profileOption(Icons.security_outlined, 'Privacy & Security'),
-                const SizedBox(height: 20),
 
                 const SizedBox(height: 16),
 
@@ -1532,7 +1487,11 @@ class ProfilePage extends StatelessWidget {
                 // ─────────────────────────────
                 _sectionHeader('Documents'),
                 _infoCard([
-                  _infoRow(Icons.badge_outlined, 'ID Verification', 'Aadhaar / Farmer ID Verified ✅'),
+                  _infoRow(
+                    Icons.badge_outlined,
+                    'ID Verification',
+                    'Aadhaar / Farmer ID Verified ✅',
+                  ),
                 ]),
 
                 const SizedBox(height: 16),
@@ -1542,9 +1501,17 @@ class ProfilePage extends StatelessWidget {
                 // ─────────────────────────────
                 _sectionHeader('Settings'),
                 _infoCard([
-                  _infoRow(Icons.notifications_outlined, 'Notifications', 'Price & Weather Alerts Active'),
+                  _infoRow(
+                    Icons.notifications_outlined,
+                    'Notifications',
+                    'Price & Weather Alerts Active',
+                  ),
                   _infoRow(Icons.language, 'Language', 'English / தமிழ்'),
-                  _infoRow(Icons.lock_outline, 'Security', 'PIN & Biometrics Protected'),
+                  _infoRow(
+                    Icons.lock_outline,
+                    'Security',
+                    'PIN & Biometrics Protected',
+                  ),
                 ]),
 
                 const SizedBox(height: 24),
@@ -1552,7 +1519,6 @@ class ProfilePage extends StatelessWidget {
                 // Edit Profile Button
                 SizedBox(
                   width: double.infinity,
-                  height: 52,
                   child: ElevatedButton.icon(
                     onPressed: () async {
                       final token = await AuthService.getToken() ?? '';
@@ -1565,12 +1531,17 @@ class ProfilePage extends StatelessWidget {
                       );
                     },
                     icon: const Icon(Icons.edit_outlined),
-                    label: const Text('Edit Profile & Farm Details', style: TextStyle(fontWeight: FontWeight.bold)),
+                    label: const Text(
+                      'Edit Profile & Farm Details',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF167D39),
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                   ),
                 ),
@@ -1583,9 +1554,7 @@ class ProfilePage extends StatelessWidget {
                   child: OutlinedButton.icon(
                     onPressed: () async {
                       await AuthService.logout();
-
                       if (!context.mounted) return;
-
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
@@ -1594,16 +1563,20 @@ class ProfilePage extends StatelessWidget {
                         (route) => false,
                       );
                     },
-                    icon: const Icon(Icons.logout),
+                    icon: const Icon(Icons.logout, color: Colors.red),
                     label: const Text(
                       'Logout',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    icon: const Icon(Icons.logout, color: Colors.red),
-                    label: const Text('Logout', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     style: OutlinedButton.styleFrom(
                       side: const BorderSide(color: Colors.red),
                       padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                   ),
                 ),
@@ -1617,33 +1590,29 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget profileOption(IconData icon, String title, {VoidCallback? onTap}) {
   Widget _sectionHeader(String title) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8, left: 4),
       child: Text(
         title,
-        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
+        style: const TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+          color: Colors.black87,
+        ),
       ),
     );
   }
 
   Widget _infoCard(List<Widget> rows) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
         borderRadius: BorderRadius.circular(18),
         border: Border.all(color: Colors.grey.shade200),
       ),
-      child: ListTile(
-        leading: Icon(icon, color: const Color(0xFF2E7D32)),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-        onTap: onTap,
       child: Column(children: rows),
     );
   }
@@ -1663,7 +1632,11 @@ class ProfilePage extends StatelessWidget {
             child: Text(
               value,
               textAlign: TextAlign.end,
-              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: Colors.black87),
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 13,
+                color: Colors.black87,
+              ),
             ),
           ),
         ],
