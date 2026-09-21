@@ -12,7 +12,6 @@ const server = http.createServer(app);
 
 const PORT = process.env.PORT || 5000;
 
-
 // ===============================
 // CHECK ENVIRONMENT VARIABLES
 // ===============================
@@ -32,7 +31,6 @@ if (!jwtSecretExists) {
   console.error("❌ JWT_SECRET environment variable is missing");
 }
 
-
 // ===============================
 // SOCKET.IO
 // ===============================
@@ -43,14 +41,12 @@ const io = new Server(server, {
   },
 });
 
-
 // ===============================
 // MIDDLEWARE
 // ===============================
 
 app.use(cors());
 app.use(express.json());
-
 
 // ===============================
 // HEALTH CHECK
@@ -62,7 +58,6 @@ app.get("/", (req, res) => {
     status: "healthy",
   });
 });
-
 
 // ===============================
 // ROUTES
@@ -94,7 +89,6 @@ app.use("/api/weather", weatherRoutes);
 app.use("/api/passports", passportRoutes);
 app.use("/api/admin", adminRoutes);
 
-
 // ===============================
 // SOCKET EVENTS
 // ===============================
@@ -113,7 +107,6 @@ io.on("connection", (socket) => {
 });
 
 app.set("io", io);
-
 
 // ===============================
 // START SERVER & CONNECT MONGODB
