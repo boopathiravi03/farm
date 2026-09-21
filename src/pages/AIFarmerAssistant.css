@@ -19,8 +19,7 @@
 
   overflow: hidden;
 
-  box-shadow:
-    0 10px 35px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
 
   display: flex;
   flex-direction: column;
@@ -63,7 +62,6 @@
 .ai-header p {
   margin: 4px 0 0;
 }
-
 
 .ai-chat {
   flex: 1;
@@ -112,7 +110,6 @@
 .suggestions button:hover {
   background: #eef7ee;
 }
-
 
 .message {
   display: flex;
@@ -164,7 +161,6 @@
 
   color: white;
 }
-
 
 .ai-input-area {
   display: flex;

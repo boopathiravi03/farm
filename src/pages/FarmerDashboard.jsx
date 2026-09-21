@@ -50,6 +50,20 @@ function FarmerDashboard() {
           >
             🤖 AI Farmer Assistant
           </button>
+          <button
+            onClick={() => navigate("/farmer-analytics")}
+            style={{
+              padding: "6px 12px",
+              background: "#1565c0",
+              color: "white",
+              border: "1px solid #90caf9",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
+          >
+            📊 Analytics Dashboard
+          </button>
           <NotificationBell />
         </div>
       </nav>

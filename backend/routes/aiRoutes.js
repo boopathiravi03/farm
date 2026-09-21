@@ -3,62 +3,45 @@ const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-
 // ==========================================
 // AI FARMER ASSISTANT
 // ==========================================
 
-router.post(
-  "/chat",
-  authMiddleware,
-  async (req, res) => {
-    try {
-      const { message } = req.body;
+router.post("/chat", authMiddleware, async (req, res) => {
+  try {
+    const { message } = req.body;
 
-      if (!message || !message.trim()) {
-        return res.status(400).json({
-          message: "Please enter a question",
-        });
-      }
-
-      const answer =
-        generateFarmAssistantResponse(
-          message
-        );
-
-      res.json({
-        success: true,
-        answer,
-      });
-
-    } catch (error) {
-      console.error(error);
-
-      res.status(500).json({
-        message:
-          "AI assistant failed",
+    if (!message || !message.trim()) {
+      return res.status(400).json({
+        message: "Please enter a question",
       });
     }
-  }
-);
 
+    const answer = generateFarmAssistantResponse(message);
+
+    res.json({
+      success: true,
+      answer,
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "AI assistant failed",
+    });
+  }
+});
 
 // ==========================================
 // DEMO AI RESPONSE ENGINE
 // ==========================================
 
-function generateFarmAssistantResponse(
-  message
-) {
-  const text =
-    message.toLowerCase();
+function generateFarmAssistantResponse(message) {
+  const text = message.toLowerCase();
 
   if (
     text.includes("tomato") &&
-    (
-      text.includes("yellow") ||
-      text.includes("leaf")
-    )
+    (text.includes("yellow") || text.includes("leaf"))
   ) {
     return `
 Yellow tomato leaves can have several causes,
@@ -74,11 +57,7 @@ crop diagnosis.
     `.trim();
   }
 
-
-  if (
-    text.includes("fertilizer") ||
-    text.includes("fertiliser")
-  ) {
+  if (text.includes("fertilizer") || text.includes("fertiliser")) {
     return `
 Before applying fertilizer, check the crop
 stage, soil condition and nutrient requirement.
@@ -90,7 +69,6 @@ A soil test can help determine the nutrients
 that are actually required.
     `.trim();
   }
-
 
   if (
     text.includes("sell") ||
@@ -108,11 +86,7 @@ and connect with buyers.
     `.trim();
   }
 
-
-  if (
-    text.includes("price") ||
-    text.includes("profit")
-  ) {
+  if (text.includes("price") || text.includes("profit")) {
     return `
 For better pricing decisions, consider:
 
@@ -127,7 +101,6 @@ Use these factors together rather than
 depending on one price estimate.
     `.trim();
   }
-
 
   if (
     text.includes("pest") ||
@@ -147,11 +120,7 @@ the problem and following the product label.
     `.trim();
   }
 
-
-  if (
-    text.includes("crop") ||
-    text.includes("plant")
-  ) {
+  if (text.includes("crop") || text.includes("plant")) {
     return `
 When choosing a crop, consider your soil,
 water availability, season, local climate,
@@ -162,7 +131,6 @@ more suitable than choosing only based on
 market price.
     `.trim();
   }
-
 
   return `
 I am your Farm Trading AI Assistant 🤖🌾.
@@ -181,6 +149,5 @@ You can ask me about:
 Ask your farming question in simple language.
   `.trim();
 }
-
 
 module.exports = router;

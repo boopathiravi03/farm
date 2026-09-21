@@ -406,3 +406,15 @@ export async function askAI(message) {
 
   return response.json();
 }
+
+export async function getFarmerAnalytics() {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/analytics/farmer`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}

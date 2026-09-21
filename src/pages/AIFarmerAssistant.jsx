@@ -73,17 +73,13 @@ function AIFarmerAssistant() {
 
               <div className="suggestions">
                 <button
-                  onClick={() =>
-                    setMessage("How can I improve my crop yield?")
-                  }
+                  onClick={() => setMessage("How can I improve my crop yield?")}
                 >
                   🌱 Improve crop yield
                 </button>
 
                 <button
-                  onClick={() =>
-                    setMessage("Why are my tomato leaves yellow?")
-                  }
+                  onClick={() => setMessage("Why are my tomato leaves yellow?")}
                 >
                   🍅 Tomato problem
                 </button>
@@ -97,9 +93,7 @@ function AIFarmerAssistant() {
                 </button>
 
                 <button
-                  onClick={() =>
-                    setMessage("How should I manage fertilizer?")
-                  }
+                  onClick={() => setMessage("How should I manage fertilizer?")}
                 >
                   🌾 Fertilizer advice
                 </button>
