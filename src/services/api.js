@@ -251,3 +251,53 @@ export async function rejectNegotiation(negotiationId) {
 
   return response.json();
 }
+
+export async function getNotifications() {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/notifications`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function getUnreadCount() {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/notifications/unread-count`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function markNotificationRead(id) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/notifications/${id}/read`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function markAllNotificationsRead() {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/notifications/read-all`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}

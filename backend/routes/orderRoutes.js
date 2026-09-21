@@ -3,6 +3,7 @@ const express = require("express");
 const Order = require("../models/Order");
 const Crop = require("../models/Crop");
 const protect = require("../middleware/authMiddleware");
+const createNotification = require("../utils/notificationHelper");
 
 const router = express.Router();
 
@@ -47,6 +48,17 @@ router.post("/", protect, async (req, res) => {
       pricePerUnit: crop.price,
       totalAmount,
       deliveryAddress,
+    });
+
+    const io = req.app.get("io");
+
+    await createNotification({
+      io,
+      userId: crop.farmer,
+      title: "New Order Received 📦",
+      message: `A buyer placed an order for ${quantity} ${crop.unit || "kg"} of ${crop.cropName}.`,
+      type: "order",
+      relatedId: order._id,
     });
 
     res.status(201).json({
@@ -165,6 +177,17 @@ router.put("/:id/status", protect, async (req, res) => {
     order.status = status;
 
     await order.save();
+
+    const io = req.app.get("io");
+
+    await createNotification({
+      io,
+      userId: order.buyer,
+      title: `Order ${status} 📦`,
+      message: `Your order status has been changed to ${status}.`,
+      type: "order",
+      relatedId: order._id,
+    });
 
     res.json({
       message: "Order status updated",

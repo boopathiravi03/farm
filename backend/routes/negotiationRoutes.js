@@ -3,8 +3,8 @@ const express = require("express");
 const Negotiation = require("../models/Negotiation");
 const Offer = require("../models/Offer");
 const Crop = require("../models/Crop");
-
 const protect = require("../middleware/authMiddleware");
+const createNotification = require("../utils/notificationHelper");
 
 const router = express.Router();
 
@@ -52,6 +52,17 @@ router.post("/", protect, async (req, res) => {
       sender: req.user.id,
       price: offerPrice,
       message: message || "Initial offer",
+    });
+
+    const io = req.app.get("io");
+
+    await createNotification({
+      io,
+      userId: negotiation.farmer,
+      title: "New Price Offer 💰",
+      message: `A buyer made a new offer of ₹${offerPrice}.`,
+      type: "negotiation",
+      relatedId: negotiation._id,
     });
 
     res.status(201).json({
@@ -110,6 +121,20 @@ router.post("/:id/offer", protect, async (req, res) => {
 
     negotiation.currentPrice = price;
     await negotiation.save();
+
+    const receiverId =
+      req.user.id === negotiation.buyer.toString()
+        ? negotiation.farmer
+        : negotiation.buyer;
+
+    await createNotification({
+      io: req.app.get("io"),
+      userId: receiverId,
+      title: "New Negotiation Offer 💰",
+      message: `You received a new price offer of ₹${price}.`,
+      type: "negotiation",
+      relatedId: negotiation._id,
+    });
 
     res.status(201).json({
       message: "Offer sent successfully",
@@ -199,6 +224,20 @@ router.put("/:id/accept", protect, async (req, res) => {
       { negotiation: negotiation._id },
       { status: "accepted" },
     );
+
+    const receiverId =
+      req.user.id === negotiation.buyer.toString()
+        ? negotiation.farmer
+        : negotiation.buyer;
+
+    await createNotification({
+      io: req.app.get("io"),
+      userId: receiverId,
+      title: "Negotiation Accepted ✅",
+      message: "Your negotiated deal has been accepted.",
+      type: "negotiation",
+      relatedId: negotiation._id,
+    });
 
     res.json({
       message: "Offer accepted successfully",
