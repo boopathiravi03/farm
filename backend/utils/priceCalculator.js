@@ -19,7 +19,7 @@ function calculateSuggestedPrice({
   }
 
   if (quality === "Poor") {
-    adjustment -= 0.10;
+    adjustment -= 0.1;
   }
 
   // Bulk quantity adjustment
@@ -29,14 +29,11 @@ function calculateSuggestedPrice({
     adjustment -= 0.02;
   }
 
-  const suggestedPrice =
-    marketPrice * (1 + adjustment);
+  const suggestedPrice = marketPrice * (1 + adjustment);
 
-  const minimumPrice =
-    marketPrice * 0.9;
+  const minimumPrice = marketPrice * 0.9;
 
-  const maximumPrice =
-    marketPrice * 1.1;
+  const maximumPrice = marketPrice * 1.1;
 
   return {
     suggestedPrice: Math.round(suggestedPrice),
@@ -48,4 +45,3 @@ function calculateSuggestedPrice({
 module.exports = {
   calculateSuggestedPrice,
 };
-

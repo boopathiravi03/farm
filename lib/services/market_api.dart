@@ -3,22 +3,15 @@ import 'package:http/http.dart' as http;
 import 'auth_service.dart';
 
 class MarketApi {
-  static const String baseUrl =
-      "https://farm-trading-backend.onrender.com/api";
+  static const String baseUrl = "https://farm-trading-backend.onrender.com/api";
 
   static Future<String?> get token => AuthService.getToken();
 
   static Map<String, String> headers(String jwt) {
-    return {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer $jwt",
-    };
+    return {"Content-Type": "application/json", "Authorization": "Bearer $jwt"};
   }
 
-  static Future<List<dynamic>> searchCrops(
-    String query,
-    String jwt,
-  ) async {
+  static Future<List<dynamic>> searchCrops(String query, String jwt) async {
     if (query.trim().length < 2) {
       return [];
     }
@@ -44,9 +37,7 @@ class MarketApi {
     String jwt,
   ) async {
     final response = await http.get(
-      Uri.parse(
-        "$baseUrl/market-prices/${Uri.encodeComponent(cropName)}",
-      ),
+      Uri.parse("$baseUrl/market-prices/${Uri.encodeComponent(cropName)}"),
       headers: headers(jwt),
     );
 
@@ -59,4 +50,3 @@ class MarketApi {
     return data["price"];
   }
 }
-

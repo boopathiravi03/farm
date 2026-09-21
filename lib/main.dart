@@ -14,6 +14,7 @@ import 'screens/price_leakage_screen.dart';
 import 'screens/sell_crop_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/bank_details_screen.dart';
+import 'screens/weather_screen.dart';
 import 'screens/supply_chain_screen.dart';
 import 'services/auth_service.dart';
 import 'services/market_price_service.dart';
@@ -50,6 +51,11 @@ class FarmTradingApp extends StatelessWidget {
           future: AuthService.getToken(),
           builder: (context, snapshot) =>
               BankDetailsScreen(token: snapshot.data ?? ''),
+        ),
+        '/weather': (context) => FutureBuilder<String?>(
+          future: AuthService.getToken(),
+          builder: (context, snapshot) =>
+              WeatherScreen(token: snapshot.data ?? ''),
         ),
         '/my-crops': (context) => const MyCropsScreen(),
         '/market-prices': (context) => const MarketPriceScreen(),
@@ -699,14 +705,21 @@ class _FarmerDashboardState extends State<FarmerDashboard> {
                 ],
               ),
               child: ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 18,
+                  vertical: 8,
+                ),
                 leading: Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: const Color(0xFFE8F5E9),
                     borderRadius: BorderRadius.circular(14),
                   ),
-                  child: const Icon(Icons.sell, color: Color(0xFF167D39), size: 26),
+                  child: const Icon(
+                    Icons.sell,
+                    color: Color(0xFF167D39),
+                    size: 26,
+                  ),
                 ),
                 title: const Text(
                   'Sell My Crop',
@@ -716,7 +729,11 @@ class _FarmerDashboardState extends State<FarmerDashboard> {
                   'Check Chennai market price & list your crop',
                   style: TextStyle(fontSize: 13, color: Colors.black54),
                 ),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Color(0xFF167D39)),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios,
+                  size: 16,
+                  color: Color(0xFF167D39),
+                ),
                 onTap: () async {
                   final token = await AuthService.getToken() ?? '';
                   if (!context.mounted) return;
@@ -897,6 +914,23 @@ class _FarmerDashboardState extends State<FarmerDashboard> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: quickAction(
+                    icon: Icons.wb_sunny_outlined,
+                    title: 'Weather Advisor',
+                    color: const Color(0xFF167D39),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/weather');
+                    },
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 12),
+
+            Row(
+              children: [
+                Expanded(
+                  child: quickAction(
                     icon: Icons.sync,
                     title: 'Sync Data',
                     color: const Color(0xFFE65100),
@@ -916,6 +950,17 @@ class _FarmerDashboardState extends State<FarmerDashboard> {
                       );
 
                       loadOfflineStatus();
+                    },
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: quickAction(
+                    icon: Icons.trending_up,
+                    title: 'Market Prices',
+                    color: const Color(0xFF0288D1),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/market-prices');
                     },
                   ),
                 ),
@@ -1309,7 +1354,6 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 25),
-                profileOption(Icons.person_outline, 'Edit Profile'),
                 profileOption(
                   Icons.person_outline,
                   'Edit Profile',

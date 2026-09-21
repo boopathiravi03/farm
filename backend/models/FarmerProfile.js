@@ -61,11 +61,7 @@ const farmerProfileSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-module.exports = mongoose.model(
-  "FarmerProfile",
-  farmerProfileSchema
-);
-
+module.exports = mongoose.model("FarmerProfile", farmerProfileSchema);

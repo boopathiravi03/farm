@@ -131,8 +131,9 @@ if (process.env.MONGO_URI) {
     .connect(process.env.MONGO_URI)
     .then(() => {
       console.log("MongoDB connected successfully ✅");
-      marketPriceService.initialize();
-      marketPriceService.getChennaiPrices().catch((err) => console.warn("Init prices:", err.message));
+      marketPriceService
+        .getChennaiPrices()
+        .catch((err) => console.warn("Init prices:", err.message));
     })
     .catch((error) => {
       console.error("MongoDB connection failed ❌");

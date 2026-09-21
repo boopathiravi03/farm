@@ -5,35 +5,24 @@ import 'package:http/http.dart' as http;
 class BankDetailsScreen extends StatefulWidget {
   final String token;
 
-  const BankDetailsScreen({
-    super.key,
-    required this.token,
-  });
+  const BankDetailsScreen({super.key, required this.token});
 
   @override
-  State<BankDetailsScreen> createState() =>
-      _BankDetailsScreenState();
+  State<BankDetailsScreen> createState() => _BankDetailsScreenState();
 }
 
-class _BankDetailsScreenState
-    extends State<BankDetailsScreen> {
-  static const String apiUrl =
-      "https://farm-trading-backend.onrender.com/api";
+class _BankDetailsScreenState extends State<BankDetailsScreen> {
+  static const String apiUrl = "https://farm-trading-backend.onrender.com/api";
 
-  final holderController =
-      TextEditingController();
+  final holderController = TextEditingController();
 
-  final bankController =
-      TextEditingController();
+  final bankController = TextEditingController();
 
-  final accountController =
-      TextEditingController();
+  final accountController = TextEditingController();
 
-  final ifscController =
-      TextEditingController();
+  final ifscController = TextEditingController();
 
-  final upiController =
-      TextEditingController();
+  final upiController = TextEditingController();
 
   bool saving = false;
   bool obscureAccount = true;
@@ -53,12 +42,8 @@ class _BankDetailsScreenState
         bankController.text.isEmpty ||
         accountController.text.isEmpty ||
         ifscController.text.isEmpty) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(
-        const SnackBar(
-          content:
-              Text("Please fill all required fields"),
-        ),
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please fill all required fields")),
       );
       return;
     }
@@ -72,20 +57,14 @@ class _BankDetailsScreenState
         Uri.parse("$apiUrl/bank"),
         headers: {
           "Content-Type": "application/json",
-          "Authorization":
-              "Bearer ${widget.token}",
+          "Authorization": "Bearer ${widget.token}",
         },
         body: jsonEncode({
-          "accountHolderName":
-              holderController.text.trim(),
-          "bankName":
-              bankController.text.trim(),
-          "accountNumber":
-              accountController.text.trim(),
-          "ifsc":
-              ifscController.text.trim(),
-          "upiId":
-              upiController.text.trim(),
+          "accountHolderName": holderController.text.trim(),
+          "bankName": bankController.text.trim(),
+          "accountNumber": accountController.text.trim(),
+          "ifsc": ifscController.text.trim(),
+          "upiId": upiController.text.trim(),
         }),
       );
 
@@ -93,39 +72,22 @@ class _BankDetailsScreenState
 
       if (!mounted) return;
 
-      if (response.statusCode >= 200 &&
-          response.statusCode < 300) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(
-          SnackBar(
-            content: Text(
-              data["message"] ??
-                  "Payment details saved",
-            ),
-          ),
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(data["message"] ?? "Payment details saved")),
         );
 
         Navigator.pop(context);
       } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(
-          SnackBar(
-            content: Text(
-              data["message"] ??
-                  "Unable to save details",
-            ),
-          ),
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(data["message"] ?? "Unable to save details")),
         );
       }
     } catch (error) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context)
-          .showSnackBar(
-        const SnackBar(
-          content:
-              Text("Network error"),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Network error")));
     }
 
     if (mounted) {
@@ -142,8 +104,7 @@ class _BankDetailsScreenState
     Widget? suffix,
   }) {
     return Padding(
-      padding:
-          const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 16),
       child: TextField(
         controller: controller,
         obscureText: obscure,
@@ -153,8 +114,7 @@ class _BankDetailsScreenState
           fillColor: Colors.white,
           suffixIcon: suffix,
           border: OutlineInputBorder(
-            borderRadius:
-                BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(14),
             borderSide: BorderSide.none,
           ),
         ),
@@ -165,37 +125,24 @@ class _BankDetailsScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          const Color(0xFFF5F8F3),
+      backgroundColor: const Color(0xFFF5F8F3),
       appBar: AppBar(
-        title: const Text(
-          "Payment Details",
-        ),
-        backgroundColor:
-            const Color(0xFF167D39),
-        foregroundColor:
-            Colors.white,
+        title: const Text("Payment Details"),
+        backgroundColor: const Color(0xFF167D39),
+        foregroundColor: Colors.white,
       ),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
           Container(
-            padding:
-                const EdgeInsets.all(18),
-            decoration:
-                BoxDecoration(
-              color:
-                  const Color(0xFFE8F5E9),
-              borderRadius:
-                  BorderRadius.circular(16),
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+              color: const Color(0xFFE8F5E9),
+              borderRadius: BorderRadius.circular(16),
             ),
             child: const Row(
               children: [
-                Icon(
-                  Icons.lock,
-                  color:
-                      Color(0xFF167D39),
-                ),
+                Icon(Icons.lock, color: Color(0xFF167D39)),
                 SizedBox(width: 10),
                 Expanded(
                   child: Text(
@@ -208,74 +155,45 @@ class _BankDetailsScreenState
 
           const SizedBox(height: 25),
 
-          input(
-            "Account holder name",
-            holderController,
-          ),
+          input("Account holder name", holderController),
 
-          input(
-            "Bank name",
-            bankController,
-          ),
+          input("Bank name", bankController),
 
           input(
             "Account number",
             accountController,
-            obscure:
-                obscureAccount,
+            obscure: obscureAccount,
             suffix: IconButton(
               icon: Icon(
-                obscureAccount
-                    ? Icons.visibility
-                    : Icons.visibility_off,
+                obscureAccount ? Icons.visibility : Icons.visibility_off,
               ),
               onPressed: () {
                 setState(() {
-                  obscureAccount =
-                      !obscureAccount;
+                  obscureAccount = !obscureAccount;
                 });
               },
             ),
           ),
 
-          input(
-            "IFSC code",
-            ifscController,
-          ),
+          input("IFSC code", ifscController),
 
-          input(
-            "UPI ID (optional)",
-            upiController,
-          ),
+          input("UPI ID (optional)", upiController),
 
           const SizedBox(height: 10),
 
           SizedBox(
             height: 55,
             child: ElevatedButton(
-              onPressed:
-                  saving
-                      ? null
-                      : saveBank,
-              style:
-                  ElevatedButton.styleFrom(
-                backgroundColor:
-                    const Color(
-                  0xFF167D39,
-                ),
-                foregroundColor:
-                    Colors.white,
+              onPressed: saving ? null : saveBank,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF167D39),
+                foregroundColor: Colors.white,
               ),
               child: saving
-                  ? const CircularProgressIndicator(
-                      color: Colors.white,
-                    )
+                  ? const CircularProgressIndicator(color: Colors.white)
                   : const Text(
                       "Save Payment Details",
-                      style: TextStyle(
-                        fontWeight:
-                            FontWeight.bold,
-                      ),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
             ),
           ),
@@ -284,4 +202,3 @@ class _BankDetailsScreenState
     );
   }
 }
-
