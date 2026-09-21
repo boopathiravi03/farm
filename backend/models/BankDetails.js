@@ -25,9 +25,11 @@ const bankDetailsSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      select: false,
     },
 
     ifscCode: {
+    ifsc: {
       type: String,
       required: true,
       trim: true,
@@ -38,15 +40,18 @@ const bankDetailsSchema = new mongoose.Schema(
       type: String,
       trim: true,
       lowercase: true,
+      default: "",
     },
 
     isVerified: {
       type: Boolean,
       default: true,
+      default: false,
     },
   },
   {
     timestamps: true,
+  },
   }
 );
 
@@ -54,7 +59,10 @@ const bankDetailsSchema = new mongoose.Schema(
 bankDetailsSchema.methods.toSafeObject = function () {
   const rawAcc = this.accountNumber || "";
   const lastFour = rawAcc.slice(-4);
-  const maskedAcc = rawAcc.length > 4 ? "•".repeat(Math.max(4, rawAcc.length - 4)) + lastFour : rawAcc;
+  const maskedAcc =
+    rawAcc.length > 4
+      ? "•".repeat(Math.max(4, rawAcc.length - 4)) + lastFour
+      : rawAcc;
 
   return {
     id: this._id,
@@ -70,3 +78,7 @@ bankDetailsSchema.methods.toSafeObject = function () {
 };
 
 module.exports = mongoose.model("BankDetails", bankDetailsSchema);
+module.exports = mongoose.model(
+  "BankDetails",
+  bankDetailsSchema
+);

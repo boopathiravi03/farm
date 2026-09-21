@@ -61,6 +61,37 @@ const cropSchema = new mongoose.Schema(
       enum: ["available", "sold", "pending"],
       default: "available",
     },
+
+    marketPrice: {
+      type: Number,
+      default: null,
+    },
+
+    suggestedPrice: {
+      type: Number,
+      default: null,
+    },
+
+    priceUpdatedAt: {
+      type: Date,
+      default: null,
+    },
+
+    marketSource: {
+      type: String,
+      default: "",
+    },
+
+    quality: {
+      type: String,
+      enum: ["Good", "Medium", "Poor", "Not Tested"],
+      default: "Not Tested",
+    },
+
+    harvestDate: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,

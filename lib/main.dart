@@ -11,6 +11,9 @@ import 'screens/market_price_screen.dart';
 import 'screens/my_crops_screen.dart';
 import 'screens/negotiation_screen.dart';
 import 'screens/price_leakage_screen.dart';
+import 'screens/sell_crop_screen.dart';
+import 'screens/profile_screen.dart';
+import 'screens/bank_details_screen.dart';
 import 'screens/supply_chain_screen.dart';
 import 'services/auth_service.dart';
 import 'services/market_price_service.dart';
@@ -33,6 +36,21 @@ class FarmTradingApp extends StatelessWidget {
 
       routes: {
         '/add-crop': (context) => const AddCropScreen(),
+        '/sell-crop': (context) => FutureBuilder<String?>(
+          future: AuthService.getToken(),
+          builder: (context, snapshot) =>
+              SellCropScreen(token: snapshot.data ?? ''),
+        ),
+        '/profile-details': (context) => FutureBuilder<String?>(
+          future: AuthService.getToken(),
+          builder: (context, snapshot) =>
+              ProfileScreen(token: snapshot.data ?? ''),
+        ),
+        '/bank-details': (context) => FutureBuilder<String?>(
+          future: AuthService.getToken(),
+          builder: (context, snapshot) =>
+              BankDetailsScreen(token: snapshot.data ?? ''),
+        ),
         '/my-crops': (context) => const MyCropsScreen(),
         '/market-prices': (context) => const MarketPriceScreen(),
         '/fair-price': (context) => const FairPriceScreen(),
@@ -662,6 +680,56 @@ class _FarmerDashboardState extends State<FarmerDashboard> {
               ],
             ),
 
+            const SizedBox(height: 20),
+
+            // ─────────────────────────────
+            // SELL MY CROP (MARKET DRIVEN)
+            // ─────────────────────────────
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: const Color(0xFFC8E6C9), width: 1.5),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x0F2E7D32),
+                    blurRadius: 10,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: ListTile(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                leading: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE8F5E9),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: const Icon(Icons.sell, color: Color(0xFF167D39), size: 26),
+                ),
+                title: const Text(
+                  'Sell My Crop',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                ),
+                subtitle: const Text(
+                  'Check Chennai market price & list your crop',
+                  style: TextStyle(fontSize: 13, color: Colors.black54),
+                ),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Color(0xFF167D39)),
+                onTap: () async {
+                  final token = await AuthService.getToken() ?? '';
+                  if (!context.mounted) return;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => SellCropScreen(token: token),
+                    ),
+                  );
+                },
+              ),
+            ),
+
             const SizedBox(height: 25),
 
             // ─────────────────────────────
@@ -1242,6 +1310,34 @@ class ProfilePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 25),
                 profileOption(Icons.person_outline, 'Edit Profile'),
+                profileOption(
+                  Icons.person_outline,
+                  'Edit Profile',
+                  onTap: () async {
+                    final token = await AuthService.getToken() ?? '';
+                    if (!context.mounted) return;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ProfileScreen(token: token),
+                      ),
+                    );
+                  },
+                ),
+                profileOption(
+                  Icons.account_balance,
+                  'Bank & Payment Details',
+                  onTap: () async {
+                    final token = await AuthService.getToken() ?? '';
+                    if (!context.mounted) return;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => BankDetailsScreen(token: token),
+                      ),
+                    );
+                  },
+                ),
                 profileOption(Icons.notifications_outlined, 'Notifications'),
                 profileOption(Icons.security_outlined, 'Privacy & Security'),
                 const SizedBox(height: 20),
@@ -1277,7 +1373,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget profileOption(IconData icon, String title) {
+  Widget profileOption(IconData icon, String title, {VoidCallback? onTap}) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
@@ -1288,6 +1384,7 @@ class ProfilePage extends StatelessWidget {
         leading: Icon(icon, color: const Color(0xFF2E7D32)),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
         trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+        onTap: onTap,
       ),
     );
   }

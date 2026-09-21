@@ -94,6 +94,7 @@ app.use("/api/passports", passportRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/market-prices", marketPriceRoutes);
 app.use("/api/profile", profileRoutes);
+app.use("/api/bank", bankRoutes);
 app.use("/api/bank-details", bankRoutes);
 
 // ===============================
@@ -131,6 +132,7 @@ if (process.env.MONGO_URI) {
     .then(() => {
       console.log("MongoDB connected successfully ✅");
       marketPriceService.initialize();
+      marketPriceService.getChennaiPrices().catch((err) => console.warn("Init prices:", err.message));
     })
     .catch((error) => {
       console.error("MongoDB connection failed ❌");
