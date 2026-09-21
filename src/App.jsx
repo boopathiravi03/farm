@@ -12,6 +12,8 @@ import WeatherRecommendations from "./pages/WeatherRecommendations";
 import MarketplaceMap from "./pages/MarketplaceMap";
 import AddCrop from "./pages/AddCrop";
 import CropQualityAI from "./pages/CropQualityAI";
+import CropPassport from "./pages/CropPassport";
+import PassportVerification from "./pages/PassportVerification";
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
         <Route path="/marketplace-map" element={<MarketplaceMap />} />
         <Route path="/add-crop" element={<AddCrop />} />
         <Route path="/crop-quality" element={<CropQualityAI />} />
+        <Route path="/crop-passport" element={<CropPassport />} />
+        <Route path="/passport/:passportId" element={<PassportVerification />} />
       </Routes>
     </BrowserRouter>
   );

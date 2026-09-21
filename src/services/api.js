@@ -466,3 +466,40 @@ export async function analyzeCropQuality(imageName, cropName) {
   return response.json();
 }
 
+export async function createCropPassport(cropId, quality, harvestDate) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/passports`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      cropId,
+      quality,
+      harvestDate,
+    }),
+  });
+
+  return response.json();
+}
+
+export async function getMyPassports() {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/passports/my`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function getPassport(passportId) {
+  const response = await fetch(`${API_URL}/passports/${passportId}`);
+
+  return response.json();
+}
+

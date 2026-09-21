@@ -120,6 +120,20 @@ function FarmerDashboard() {
           >
             📷 AI Crop Quality
           </button>
+          <button
+            onClick={() => navigate("/crop-passport")}
+            style={{
+              padding: "6px 12px",
+              background: "#00796b",
+              color: "white",
+              border: "1px solid #80cbc4",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
+          >
+            📱 Crop Passport
+          </button>
           <NotificationBell />
         </div>
       </nav>

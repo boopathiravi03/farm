@@ -26,10 +26,7 @@ function CropQualityAI() {
     setLoading(true);
 
     try {
-      const response = await analyzeCropQuality(
-        image.name,
-        cropName
-      );
+      const response = await analyzeCropQuality(image.name, cropName);
 
       if (response.success) {
         setResult(response);
@@ -49,9 +46,7 @@ function CropQualityAI() {
       {/* HEADER */}
       <div className="quality-header">
         <h1>📷 AI Crop Quality Detection</h1>
-        <p>
-          Upload a crop image to analyze its quality and freshness.
-        </p>
+        <p>Upload a crop image to analyze its quality and freshness.</p>
       </div>
 
       {/* UPLOAD CARD */}
@@ -60,10 +55,7 @@ function CropQualityAI() {
         <h2>Upload Crop Image</h2>
         <p>Select a clear image of your crop.</p>
 
-        <select
-          value={cropName}
-          onChange={(e) => setCropName(e.target.value)}
-        >
+        <select value={cropName} onChange={(e) => setCropName(e.target.value)}>
           <option>Tomato</option>
           <option>Rice</option>
           <option>Groundnut</option>
@@ -74,11 +66,7 @@ function CropQualityAI() {
 
         <label className="upload-button">
           📁 Choose Image
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
+          <input type="file" accept="image/*" onChange={handleImageChange} />
         </label>
 
         {image && (

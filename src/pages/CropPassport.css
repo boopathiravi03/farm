@@ -1,0 +1,149 @@
+.passport-page {
+  min-height: 100vh;
+  padding: 30px;
+  background: #f4f8f4;
+}
+
+.passport-header {
+  margin-bottom: 25px;
+}
+
+.passport-header h1 {
+  margin: 0;
+  font-size: 32px;
+}
+
+.passport-header p {
+  color: #666;
+}
+
+/* CREATE */
+.passport-create {
+  max-width: 650px;
+  background: white;
+  padding: 25px;
+  border-radius: 18px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+}
+
+.passport-create h2 {
+  margin-top: 0;
+}
+
+.passport-create select,
+.passport-create input {
+  width: 100%;
+  padding: 13px;
+  margin: 8px 0 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.passport-create label {
+  display: block;
+  margin-top: 5px;
+  font-weight: 600;
+}
+
+.passport-create button {
+  width: 100%;
+  padding: 14px;
+  background: #218739;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* PASSPORT LIST */
+.passport-section h2 {
+  margin-bottom: 20px;
+}
+
+.passport-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.passport-card {
+  background: white;
+  padding: 25px;
+  border-radius: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+}
+
+.passport-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #218739;
+  font-weight: bold;
+}
+
+.passport-info h3 {
+  font-size: 24px;
+  margin: 8px 0;
+}
+
+.passport-info p {
+  margin: 7px 0;
+  color: #666;
+}
+
+.passport-info strong {
+  display: inline-block;
+  background: #f0f5f0;
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+}
+
+.qr-section {
+  text-align: center;
+}
+
+.qr-section p {
+  font-size: 13px;
+  color: #777;
+}
+
+/* EMPTY */
+.empty-passport {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  color: #777;
+}
+
+/* MOBILE */
+@media (max-width: 800px) {
+  .passport-page {
+    padding: 15px;
+  }
+
+  .passport-header h1 {
+    font-size: 26px;
+  }
+
+  .passport-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .passport-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .qr-section {
+    align-self: center;
+  }
+}
