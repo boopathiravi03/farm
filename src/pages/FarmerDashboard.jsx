@@ -78,6 +78,34 @@ function FarmerDashboard() {
           >
             🌦️ Weather & Crop Advisor
           </button>
+          <button
+            onClick={() => navigate("/marketplace-map")}
+            style={{
+              padding: "6px 12px",
+              background: "#388e3c",
+              color: "white",
+              border: "1px solid #a5d6a7",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
+          >
+            📍 Marketplace Map
+          </button>
+          <button
+            onClick={() => navigate("/add-crop")}
+            style={{
+              padding: "6px 12px",
+              background: "#f57c00",
+              color: "white",
+              border: "1px solid #ffb74d",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
+          >
+            ➕ List Crop
+          </button>
           <NotificationBell />
         </div>
       </nav>

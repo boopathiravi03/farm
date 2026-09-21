@@ -36,6 +36,20 @@ function BuyerDashboard() {
           >
             💳 Payment History
           </button>
+          <button
+            onClick={() => navigate("/marketplace-map")}
+            style={{
+              padding: "6px 12px",
+              background: "#2e7d32",
+              color: "white",
+              border: "1px solid #a5d6a7",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
+          >
+            📍 Marketplace Map
+          </button>
           <NotificationBell />
         </div>
       </nav>

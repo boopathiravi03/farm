@@ -48,6 +48,8 @@ export async function addCrop(cropData) {
   return response.json();
 }
 
+export const createCrop = addCrop;
+
 export async function getMyCrops() {
   const token = localStorage.getItem("token");
 

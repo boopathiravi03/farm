@@ -9,6 +9,8 @@ import OrderTracking from "./pages/OrderTracking";
 import AIFarmerAssistant from "./pages/AIFarmerAssistant";
 import FarmerAnalytics from "./pages/FarmerAnalytics";
 import WeatherRecommendations from "./pages/WeatherRecommendations";
+import MarketplaceMap from "./pages/MarketplaceMap";
+import AddCrop from "./pages/AddCrop";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path="/ai-assistant" element={<AIFarmerAssistant />} />
         <Route path="/farmer-analytics" element={<FarmerAnalytics />} />
         <Route path="/weather-advisor" element={<WeatherRecommendations />} />
+        <Route path="/marketplace-map" element={<MarketplaceMap />} />
+        <Route path="/add-crop" element={<AddCrop />} />
       </Routes>
     </BrowserRouter>
   );

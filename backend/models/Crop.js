@@ -38,6 +38,16 @@ const cropSchema = new mongoose.Schema(
       required: true,
     },
 
+    latitude: {
+      type: Number,
+      default: null,
+    },
+
+    longitude: {
+      type: Number,
+      default: null,
+    },
+
     description: {
       type: String,
     },

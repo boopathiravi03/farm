@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  getWeather,
-  getCropRecommendations,
-} from "../services/api";
+import { getWeather, getCropRecommendations } from "../services/api";
 
 import "./WeatherRecommendations.css";
 
@@ -67,9 +64,7 @@ function WeatherRecommendations() {
           </div>
 
           <div className="weather-main">
-            <div className="temperature">
-              🌡️ {weather.temperature}°C
-            </div>
+            <div className="temperature">🌡️ {weather.temperature}°C</div>
           </div>
 
           <div className="weather-details">
@@ -99,10 +94,7 @@ function WeatherRecommendations() {
         <h2>🌱 Crop Recommendation</h2>
         <p>Select your soil type to find suitable crops.</p>
 
-        <select
-          value={soilType}
-          onChange={(e) => setSoilType(e.target.value)}
-        >
+        <select value={soilType} onChange={(e) => setSoilType(e.target.value)}>
           <option>Red Soil</option>
           <option>Black Soil</option>
           <option>Clay Soil</option>
@@ -110,10 +102,7 @@ function WeatherRecommendations() {
           <option>Loamy Soil</option>
         </select>
 
-        <button
-          onClick={generateRecommendations}
-          disabled={loading}
-        >
+        <button onClick={generateRecommendations} disabled={loading}>
           {loading ? "Analyzing..." : "🌾 Get Crop Recommendations"}
         </button>
       </div>

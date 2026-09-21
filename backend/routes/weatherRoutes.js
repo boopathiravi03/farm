@@ -32,12 +32,7 @@ router.get("/", authMiddleware, async (req, res) => {
 // Crop recommendation
 router.post("/recommend", authMiddleware, async (req, res) => {
   try {
-    const {
-      temperature,
-      humidity,
-      rainfall,
-      soilType,
-    } = req.body;
+    const { temperature, humidity, rainfall, soilType } = req.body;
 
     const recommendations = [];
 
@@ -112,11 +107,7 @@ router.post("/recommend", authMiddleware, async (req, res) => {
     }
 
     // Banana
-    if (
-      temperature >= 20 &&
-      temperature <= 35 &&
-      humidity >= 60
-    ) {
+    if (temperature >= 20 && temperature <= 35 && humidity >= 60) {
       recommendations.push({
         crop: "Banana",
         suitability: "Medium",
@@ -152,10 +143,7 @@ router.post("/recommend", authMiddleware, async (req, res) => {
     // Remove duplicates
     const uniqueRecommendations = recommendations.filter(
       (item, index, self) =>
-        index ===
-        self.findIndex(
-          (crop) => crop.crop === item.crop
-        )
+        index === self.findIndex((crop) => crop.crop === item.crop),
     );
 
     res.json({
