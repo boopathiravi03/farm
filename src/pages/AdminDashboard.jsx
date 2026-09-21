@@ -1,4 +1,3 @@
-import NotificationBell from "../components/NotificationBell";
 import React, { useEffect, useState } from "react";
 
 import {
@@ -13,7 +12,6 @@ import {
 import "./AdminDashboard.css";
 
 function AdminDashboard() {
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
   const [stats, setStats] = useState({});
   const [users, setUsers] = useState([]);
   const [crops, setCrops] = useState([]);
@@ -29,12 +27,7 @@ function AdminDashboard() {
     try {
       setLoading(true);
 
-      const [
-        statsData,
-        usersData,
-        cropsData,
-        ordersData,
-      ] = await Promise.all([
+      const [statsData, usersData, cropsData, ordersData] = await Promise.all([
         getAdminStats(),
         getAdminUsers(),
         getAdminCrops(),
@@ -65,7 +58,7 @@ function AdminDashboard() {
 
   const handleDeleteUser = async (id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this user?"
+      "Are you sure you want to delete this user?",
     );
 
     if (!confirmDelete) return;
@@ -81,7 +74,7 @@ function AdminDashboard() {
 
   const handleDeleteCrop = async (id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this crop?"
+      "Are you sure you want to delete this crop?",
     );
 
     if (!confirmDelete) return;
@@ -96,30 +89,10 @@ function AdminDashboard() {
   };
 
   if (loading) {
-    return (
-      <div className="admin-loading">
-        Loading Admin Dashboard...
-      </div>
-    );
+    return <div className="admin-loading">Loading Admin Dashboard...</div>;
   }
 
   return (
-    <div className="dashboard admin-dashboard">
-      <nav
-        className="dashboard-navbar"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "10px 20px",
-          background: "#37474f",
-          color: "white",
-        }}
-      >
-        <h2>📊 Farm Trading — Admin Overview</h2>
-        <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-          <span>Admin: {user.name || "Administrator"}</span>
-          <NotificationBell />
     <div className="admin-dashboard">
       {/* HEADER */}
       <div className="admin-header">
@@ -128,15 +101,7 @@ function AdminDashboard() {
           <h1>Admin Dashboard</h1>
           <p>Manage users, crops, orders and platform activity.</p>
         </div>
-      </nav>
 
-      <main style={{ padding: "20px" }}>
-        <h3>System Overview & Live Notifications</h3>
-        <p>
-          Monitor platform transactions, order flows, and real-time farmer-buyer
-          alerts.
-        </p>
-      </main>
         <div className="admin-badge">👨💼 ADMIN</div>
       </div>
 
@@ -175,9 +140,7 @@ function AdminDashboard() {
         <div className="admin-stat-card revenue-card">
           <span>💰</span>
           <h3>Platform Revenue</h3>
-          <strong>
-            ₹{Number(stats.totalRevenue || 0).toLocaleString()}
-          </strong>
+          <strong>₹{Number(stats.totalRevenue || 0).toLocaleString()}</strong>
         </div>
       </div>
 
@@ -239,9 +202,7 @@ function AdminDashboard() {
                     <td>{user.email}</td>
                     <td>{user.phone || "-"}</td>
                     <td>
-                      <span className={`role ${user.role}`}>
-                        {user.role}
-                      </span>
+                      <span className={`role ${user.role}`}>{user.role}</span>
                     </td>
                     <td>
                       {user.role !== "admin" && (

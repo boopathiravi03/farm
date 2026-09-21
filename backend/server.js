@@ -33,12 +33,16 @@ const io = new Server(server, {
 app.use(cors());
 app.use(express.json());
 
+// Health endpoint
 app.get("/", (req, res) => {
   res.json({
     message: "Farm Trading API is running 🚜🌾",
+    message: "Farm Trading API is running",
+    status: "healthy",
   });
 });
 
+// API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/crops", cropRoutes);
 app.use("/api/orders", orderRoutes);
@@ -69,6 +73,19 @@ io.on("connection", (socket) => {
 
 app.set("io", io);
 
+// Startup logging
+const PORT = process.env.PORT || 5000;
+const mongoUriExists = Boolean(process.env.MONGO_URI);
+
+console.log(`Starting server on port: ${PORT}`);
+console.log(`MONGO_URI exists: ${mongoUriExists ? "Yes ✅" : "No ❌"}`);
+
+if (!process.env.MONGO_URI) {
+  console.error("MONGO_URI environment variable is missing");
+  process.exit(1);
+}
+
+// Connect to MongoDB and start server
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
@@ -78,9 +95,13 @@ mongoose
       console.log(
         `Server running on http://localhost:${process.env.PORT || 5000}`,
       );
+    server.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
     });
   })
   .catch((error) => {
     console.error("MongoDB connection failed ❌");
     console.error(error.message);
+    console.error("Error details:", error.message);
+    process.exit(1);
   });

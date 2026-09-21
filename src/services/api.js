@@ -580,4 +580,3 @@ export async function getAdminOrders() {
 
   return response.json();
 }
-
