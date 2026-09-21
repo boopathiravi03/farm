@@ -18,6 +18,7 @@ const aiRoutes = require("./routes/aiRoutes");
 const analyticsRoutes = require("./routes/analyticsRoutes");
 const weatherRoutes = require("./routes/weatherRoutes");
 const passportRoutes = require("./routes/passportRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
 
@@ -49,6 +50,7 @@ app.use("/api/ai", aiRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/weather", weatherRoutes);
 app.use("/api/passports", passportRoutes);
+app.use("/api/admin", adminRoutes);
 
 // Socket.IO
 io.on("connection", (socket) => {

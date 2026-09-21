@@ -39,10 +39,7 @@ const cropPassportSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-module.exports = mongoose.model(
-  "CropPassport",
-  cropPassportSchema
-);
+module.exports = mongoose.model("CropPassport", cropPassportSchema);

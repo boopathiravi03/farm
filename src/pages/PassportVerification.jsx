@@ -35,18 +35,12 @@ function PassportVerification() {
 
   if (loading) {
     return (
-      <div className="verification-loading">
-        🔍 Verifying crop passport...
-      </div>
+      <div className="verification-loading">🔍 Verifying crop passport...</div>
     );
   }
 
   if (error) {
-    return (
-      <div className="verification-error">
-        ❌ {error}
-      </div>
-    );
+    return <div className="verification-error">❌ {error}</div>;
   }
 
   const crop = passport?.crop;

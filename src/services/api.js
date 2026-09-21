@@ -503,3 +503,81 @@ export async function getPassport(passportId) {
   return response.json();
 }
 
+// ===============================
+// ADMIN API
+// ===============================
+
+export async function getAdminStats() {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/admin/stats`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function getAdminUsers() {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/admin/users`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function deleteAdminUser(id) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/admin/users/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function getAdminCrops() {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/admin/crops`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function deleteAdminCrop(id) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/admin/crops/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function getAdminOrders() {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/admin/orders`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+}
+

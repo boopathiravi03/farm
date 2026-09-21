@@ -1,0 +1,291 @@
+.admin-dashboard {
+  min-height: 100vh;
+  padding: 30px;
+  background: #f4f7f5;
+  color: #17251c;
+}
+
+/* HEADER */
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #173d27;
+  color: white;
+  padding: 30px;
+  border-radius: 18px;
+  margin-bottom: 25px;
+}
+
+.admin-header h1 {
+  margin: 5px 0;
+  font-size: 32px;
+}
+
+.admin-header p {
+  margin: 5px 0;
+  opacity: 0.85;
+}
+
+.admin-label {
+  font-size: 13px;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+.admin-badge {
+  background: white;
+  color: #173d27;
+  padding: 12px 18px;
+  border-radius: 30px;
+  font-weight: bold;
+}
+
+/* STAT CARDS */
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.admin-stat-card {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+}
+
+.admin-stat-card span {
+  font-size: 25px;
+}
+
+.admin-stat-card h3 {
+  margin: 10px 0 5px;
+  font-size: 14px;
+  color: #68736c;
+}
+
+.admin-stat-card strong {
+  font-size: 25px;
+}
+
+.revenue-card {
+  background: #eaf7ed;
+}
+
+/* SUMMARY */
+.admin-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.admin-summary div {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-summary span {
+  color: #68736c;
+}
+
+.admin-summary strong {
+  font-size: 22px;
+}
+
+/* SECTION */
+.admin-section {
+  background: white;
+  border-radius: 18px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.05);
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-heading h2 {
+  margin: 0;
+}
+
+.section-heading p {
+  color: #777;
+  margin-top: 5px;
+}
+
+.section-heading > span {
+  background: #edf6ef;
+  color: #1d6b36;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+/* TABLE */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+th {
+  text-align: left;
+  background: #f4f7f5;
+  padding: 14px;
+  font-size: 13px;
+}
+
+td {
+  padding: 14px;
+  border-bottom: 1px solid #edf0ed;
+  font-size: 14px;
+}
+
+tr:hover {
+  background: #fafcfa;
+}
+
+/* ROLE */
+.role {
+  padding: 6px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.role.farmer {
+  background: #e7f6e9;
+  color: #20753a;
+}
+
+.role.buyer {
+  background: #e7f0ff;
+  color: #245ca8;
+}
+
+.role.admin {
+  background: #eee;
+  color: #333;
+}
+
+/* STATUS */
+.status {
+  padding: 6px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.status.available,
+.status.delivered,
+.status.accepted {
+  background: #e6f6e9;
+  color: #21733a;
+}
+
+.status.pending,
+.status.processing {
+  background: #fff4d8;
+  color: #946d00;
+}
+
+.status.sold,
+.status.cancelled,
+.status.rejected {
+  background: #ffe8e8;
+  color: #a32d2d;
+}
+
+/* DELETE */
+.delete-btn {
+  border: none;
+  background: #ffe5e5;
+  color: #b32626;
+  padding: 8px 13px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.delete-btn:hover {
+  background: #ffcaca;
+}
+
+/* LOADING */
+.admin-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+/* FOOTER */
+.admin-footer {
+  text-align: center;
+  padding: 30px;
+  color: #66716a;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+  .admin-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .admin-dashboard {
+    padding: 15px;
+  }
+
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .admin-header h1 {
+    font-size: 25px;
+  }
+
+  .admin-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .admin-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .admin-section {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 450px) {
+  .admin-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-summary {
+    grid-template-columns: 1fr;
+  }
+}
+

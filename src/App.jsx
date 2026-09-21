@@ -23,6 +23,7 @@ function App() {
         <Route path="/farmer" element={<FarmerDashboard />} />
         <Route path="/buyer" element={<BuyerDashboard />} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/payment-history" element={<PaymentHistory />} />
         <Route path="/farmer-earnings" element={<FarmerEarnings />} />
@@ -34,7 +35,10 @@ function App() {
         <Route path="/add-crop" element={<AddCrop />} />
         <Route path="/crop-quality" element={<CropQualityAI />} />
         <Route path="/crop-passport" element={<CropPassport />} />
-        <Route path="/passport/:passportId" element={<PassportVerification />} />
+        <Route
+          path="/passport/:passportId"
+          element={<PassportVerification />}
+        />
       </Routes>
     </BrowserRouter>
   );

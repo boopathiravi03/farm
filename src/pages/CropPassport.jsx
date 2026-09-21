@@ -54,7 +54,7 @@ function CropPassport() {
       const result = await createCropPassport(
         selectedCrop,
         quality,
-        harvestDate
+        harvestDate,
       );
 
       if (result.success) {
@@ -99,10 +99,7 @@ function CropPassport() {
           ))}
         </select>
 
-        <select
-          value={quality}
-          onChange={(e) => setQuality(e.target.value)}
-        >
+        <select value={quality} onChange={(e) => setQuality(e.target.value)}>
           <option>Not Tested</option>
           <option>Good</option>
           <option>Medium</option>
@@ -126,9 +123,7 @@ function CropPassport() {
         <h2>📋 My Crop Passports</h2>
 
         {passports.length === 0 ? (
-          <div className="empty-passport">
-            No crop passports created yet.
-          </div>
+          <div className="empty-passport">No crop passports created yet.</div>
         ) : (
           <div className="passport-grid">
             {passports.map((passport) => {
